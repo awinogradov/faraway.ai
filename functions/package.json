@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "author": "Anton Vinogradov <winogradovaa@gmail.com>",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "firebase": "6.0.2",
+    "firebase-admin": "~7.0.0",
+    "firebase-functions": "^2.3.0",
+    "firebase-tools": "6.10.0",
+    "node-telegram-bot-api": "0.30.0"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "0.31.0",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2"
+  }
+}

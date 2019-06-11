@@ -1,0 +1,22 @@
+{
+  "name": "@faraway.ai/dates",
+  "version": "0.0.1",
+  "description": "Dates manipulations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/awinogradov/wildtravels.co.git"
+  },
+  "author": "Anton Vinogradov <winogradovaa@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/awinogradov/wildtravels.co/issues"
+  },
+  "homepage": "https://github.com/awinogradov/wildtravels.co#readme",
+  "devDependencies": {
+    "dayjs": "1.8.12"
+  }
+}
