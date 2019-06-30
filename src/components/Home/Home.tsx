@@ -4,7 +4,7 @@ import clipboard from 'clipboard-polyfill';
 import isUrl from 'validator/lib/isURL';
 
 import { TabFocusSensor } from '../TabFocusSensor/TabFocusSensor';
-import { Card } from '../Card/Card';
+import { CardResolver } from '../CardResolver/CardResolver';
 
 export const Home = () => {
   const [validUrl, setValidUrl] = useState('');
@@ -18,7 +18,7 @@ export const Home = () => {
   return (
     <>
       <TabFocusSensor onFocus={onFocus}/>
-      {validUrl && <Card url={validUrl} />}
+      {validUrl ? <CardResolver url={validUrl} /> : null}
     </>
   );
 };
