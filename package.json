@@ -9,12 +9,19 @@
     "npm": "6.x"
   },
   "scripts": {
-    "start": "razzle start",
     "test": "razzle test --env=jsdom",
     "build": "razzle build",
-    "preproduction": "npm run build",
+    "start": "razzle start",
+    "prestage": "npm run container:build",
+    "stage": "docker run -p 3000:3000 -e PORT=3000 farawayai",
+    "precontainer:build": "npm run build",
+    "container:build": "docker build -t farawayai .",
+    "precontainer:push": "npm run container:build",
+    "container:push": "heroku container:push web -a farawayai",
+    "precontainer:publish": "npm run container:push",
+    "container:publish": "heroku container:release web -a farawayai",
     "production": "NODE_ENV=production node build/server.js",
-    "deploy": "git push heroku master"
+    "deploy": "npm run container:publish"
   },
   "dependencies": {
     "await-to-js": "2.1.1",

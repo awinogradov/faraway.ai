@@ -40,7 +40,7 @@ export async function serve() {
     .use(bodyParser.json())
     .use(morgan('tiny'))
     .use(compression())
-    .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
+    .use('/', express.static(__dirname + '/public'))
     .get(['/', '/signin'], (req: Request, res: Response) => {
       const context = {};
       const markup = renderToString(
@@ -49,25 +49,35 @@ export async function serve() {
         </StaticRouter>
       );
 
+      let cssResources = '';
+      if (NODE_ENV === 'production') {
+        cssResources += `<link rel="stylesheet" href="${assets.client.css}">`;
+      }
+
+      const setCrossorigin = NODE_ENV === 'production' ? '' : 'crossorigin';
+      const cdnLinks = `
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+      `;
+
+      let jsResources = `<script src="${assets.client.js}" defer${setCrossorigin}></script>`;
+      if (NODE_ENV === 'production') {
+        jsResources = cdnLinks + jsResources;
+      }
+
       res.send(
         `<!doctype html>
           <html lang="en">
           <head>
               <meta http-equiv="X-UA-Compatible" content="IE=edge" />
               <meta charSet='utf-8' />
-              <title>Razzle TypeScript</title>
+              <title>Faraway AI — Personal travel assitant.</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              ${assets.client.css
-                  ? `<link rel="stylesheet" href="${assets.client.css}">`
-                  : ''
-              }
+              ${cssResources}
           </head>
           <body>
               <div id="root">${markup}</div>
-              ${NODE_ENV === 'production'
-                  ? `<script src="${assets.client.js}" defer></script>`
-                  : `<script src="${assets.client.js}" defer crossorigin></script>`
-              }
+              ${jsResources}
           </body>
         </html>`
       );
