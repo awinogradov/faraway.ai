@@ -1,12 +1,7 @@
-import 'reflect-metadata';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
-import { resolve } from 'path';
 import express, { Request, Response, NextFunction } from 'express';
-import { GraphQLServer /*, PubSub*/ } from 'graphql-yoga';
-import { createConnection, ConnectionOptions } from 'typeorm';
-import { buildSchema } from 'type-graphql';
 import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -14,80 +9,29 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cookiesParser from 'cookie-parser';
 
-import { dbConnectionUrl } from '../utils/dbConnection';
-import { GraphQLContext, WebAssets } from '../typings';
+import { WebAssets } from '../typings';
 import { logger } from '../utils/logger';
-import { ServerError, pe } from '../utils/errors';
-import { resolvers, entities } from '../database';
-import { authRoutes, authGQLMiddleware } from './auth';
+import { ServerError } from '../utils/errors';
 import { App } from '../components/App/App';
 
 process.on('unhandledRejection', (e: any) => console.error(e.message, e.stack));
 
-// const pubsub = new PubSub();
-
+const app = express();
 const assets: WebAssets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
-
-const serverDefaultOptions = {
-  endpoint: '/graphql',
-  subscriptions: '/subscriptions',
-  playground: process.env.GQL_PLAYGROUND,
-};
-
-const dbDefaultOptions = {
-  entities,
-  type: 'mongodb',
-  synchronize: true,
-  useNewUrlParser: true,
-};
 
 export async function serve() {
   const {
-    DATABASE_USER,
-    DATABASE_PWD,
-    DATABASE_HOST,
-    DATABASE_PORT,
-    DATABASE_NAME,
-    DATABASE_SRV,
     PORT,
     DEBUG,
+    NODE_ENV,
   } = process.env;
 
   logger.debug('env', {
-    DATABASE_USER,
-    DATABASE_PWD,
-    DATABASE_HOST,
-    DATABASE_PORT,
-    DATABASE_NAME,
-    DATABASE_SRV,
     PORT,
     DEBUG,
   });
 
-  const gqlSchema = await buildSchema({
-    resolvers,
-    validate: false,
-    emitSchemaFile: resolve(__dirname, '../database/schema.gql'),
-  });
-
-  const dbOptions = {
-    ...dbDefaultOptions,
-    url: dbConnectionUrl(),
-  } as ConnectionOptions;
-
-  const dbConnection = await createConnection(dbOptions);
-  logger.debug('db connected', dbOptions);
-
-  const gqlServer = new GraphQLServer({
-    schema: gqlSchema,
-    middlewares: [authGQLMiddleware],
-    context: ({ request }: GraphQLContext) => ({
-      dbConnection,
-      request,
-    }),
-  });
-
-  gqlServer.express
+  app
     .disable('x-powered-by')
     .use(cors())
     .use(helmet())
@@ -96,8 +40,7 @@ export async function serve() {
     .use(bodyParser.json())
     .use(morgan('tiny'))
     .use(compression())
-    .use(authRoutes)
-    .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
+    .use('/', express.static(__dirname + '/public'))
     .get(['/', '/signin'], (req: Request, res: Response) => {
       const context = {};
       const markup = renderToString(
@@ -106,42 +49,41 @@ export async function serve() {
         </StaticRouter>
       );
 
+      let cssResources = '';
+      if (NODE_ENV === 'production') {
+        cssResources += `<link rel="stylesheet" href="${assets.client.css}">`;
+      }
+
+      const setCrossorigin = NODE_ENV === 'production' ? '' : 'crossorigin';
+      const cdnLinks = `
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+      `;
+
+      let jsResources = `<script src="${assets.client.js}" defer${setCrossorigin}></script>`;
+      if (NODE_ENV === 'production') {
+        jsResources = cdnLinks + jsResources;
+      }
+
       res.send(
         `<!doctype html>
-          <html lang="">
+          <html lang="en">
           <head>
               <meta http-equiv="X-UA-Compatible" content="IE=edge" />
               <meta charSet='utf-8' />
-              <title>Razzle TypeScript OMG</title>
+              <title>Faraway AI — Personal travel assitant.</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              ${
-                assets.client.css
-                  ? `<link rel="stylesheet" href="${assets.client.css}">`
-                  : ''
-              }
-                ${
-                  process.env.NODE_ENV === 'production'
-                    ? `<script src="${assets.client.js}" defer></script>`
-                    : `<script src="${assets.client.js}" defer crossorigin></script>`
-                }
+              ${cssResources}
           </head>
           <body>
               <div id="root">${markup}</div>
+              ${jsResources}
           </body>
         </html>`
       );
     });
 
-  const serverOptions = {
-    ...serverDefaultOptions,
-    port: PORT,
-  };
-
-  const http = await gqlServer.start(serverOptions, runnedOptions => {
-    logger.debug('server is running', runnedOptions);
-  });
-
-  gqlServer.express
+  app
     .use((_req, _res, next) => {
       const error = new ServerError('Not Found', 404);
 
@@ -157,9 +99,12 @@ export async function serve() {
       res.send(`<h1>${error.status} ${error.message}</h1>`);
     });
 
+  const http = app.listen(PORT, () => {
+    logger.info('server started', PORT);
+  });
+
   const stop = () => {
     http.close(() => logger.debug('server stoped'));
-    dbConnection.close();
   };
 
   return { http, stop };
