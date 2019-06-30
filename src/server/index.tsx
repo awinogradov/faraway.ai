@@ -8,7 +8,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cookiesParser from 'cookie-parser';
+import { URL } from 'url';
 
+import { resolveParseStrategy } from './parse';
 import { WebAssets } from '../typings';
 import { logger } from '../utils/logger';
 import { ServerError } from '../utils/errors';
@@ -40,6 +42,10 @@ export async function serve() {
     .use(bodyParser.json())
     .use(morgan('tiny'))
     .use(compression())
+    .post('/parse', async (req: Request, res: Response) => {
+      const urlData = await resolveParseStrategy(req.body.url);
+      res.json(urlData);
+    })
     .use('/', express.static(__dirname + '/public'))
     .get(['/', '/signin'], (req: Request, res: Response) => {
       const context = {};
@@ -54,7 +60,7 @@ export async function serve() {
         cssResources += `<link rel="stylesheet" href="${assets.client.css}">`;
       }
 
-      const setCrossorigin = NODE_ENV === 'production' ? '' : 'crossorigin';
+      const setCrossorigin = NODE_ENV === 'production' ? '' : ' crossorigin';
       const cdnLinks = `
         <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
