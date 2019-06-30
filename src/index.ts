@@ -1,6 +1,3 @@
-require('dotenv').config();
-// this require is necessary for server HMR to recover from error
-// tslint:disable-next-line:no-var-requires
 let server: any = {};
 
 if (module.hot) {

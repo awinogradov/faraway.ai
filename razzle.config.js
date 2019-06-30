@@ -3,9 +3,7 @@
 module.exports = {
   plugins: ['typescript'],
   modify: (config, { target, dev }, webpack) => {
-    if (!dev) {
-      config.devtool = false;
-    }
+    config.devtool = undefined;
 
     return config;
   },
