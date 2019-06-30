@@ -6,8 +6,8 @@
   "main": "src/index.ts",
   "author": "Anton Vinodradov <winogradovaa@gmail.com>",
   "engines": {
-    "node": "10.16.0",
-    "npm": "6.9.0"
+    "node": "12.x",
+    "npm": "6.x"
   },
   "scripts": {
     "start": "razzle start",
