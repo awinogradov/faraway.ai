@@ -3,7 +3,6 @@
   "description": "Faraway AI",
   "version": "0.0.1",
   "license": "MIT",
-  "main": "src/index.ts",
   "author": "Anton Vinodradov <winogradovaa@gmail.com>",
   "engines": {
     "node": "12.x",

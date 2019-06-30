@@ -5,6 +5,10 @@ module.exports = {
   modify: (config, { target, dev }, webpack) => {
     config.devtool = 'cheap-source-map';
 
+    if(!dev) {
+      console.log(config);
+    }
+
     return config;
   },
 };
