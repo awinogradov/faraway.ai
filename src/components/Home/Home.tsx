@@ -1,20 +1,18 @@
 import React from 'react';
+import clipboard from 'clipboard-polyfill';
 
-import { useQuery } from '../../utils/api';
-
-const query = `{
-  geoMaps {
-    title
-    description
-  }
-}`;
+import { TabFocusSensor } from '../TabFocusSensor/TabFocusSensor';
 
 export const Home = () => {
-  const { value } = useQuery<{ geoMaps: string[] }>(query);
+  const onFocus = async () => {
+    const inClipBoard = await clipboard.readText();
+    console.log(inClipBoard);
+  };
 
-  if (value) {
-    return <div>Welcome to Faraway AI! API res is {JSON.stringify(value.geoMaps)}</div>;
-  }
-
-  return null;
+  return (
+    <>
+      <TabFocusSensor onFocus={onFocus}/>
+      <div>Welcome to Faraway AI!</div>
+    </>
+  );
 };
