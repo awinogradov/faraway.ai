@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "projects/*"
+  ],
+  "independent": true,
+  "version": "independent",
+  "exact": true,
+  "loglevel": "verbose",
+  "conventionalCommits": true,
+  "ci": true
+}

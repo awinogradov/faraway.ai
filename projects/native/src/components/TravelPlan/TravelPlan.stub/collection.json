@@ -1,0 +1,134 @@
+[
+    {
+        "kind": "instaPlace",
+        "title": "Chocolate Hills",
+        "type": "view",
+        "notes": [
+            {
+                "timestamp": null,
+                "content": "Close to Panorama Resort"
+            }
+        ],
+        "post": {
+            "image": "https://scontent-arn2-1.cdninstagram.com/vp/4fd9220a72f9c3095514d92fab3bb80d/5E0D3514/t51.2885-15/e35/64259079_411068739493522_1777007148614831177_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com&_nc_cat=110",
+            "ref": "https://www.instagram.com/p/BzXE-ABH7om/",
+            "likes": "764"
+          },
+          "author": {
+            "username": "philippinediscoveries",
+            "avatar": "https://scontent-arn2-1.cdninstagram.com/vp/96da0cba985e117c1b7e2c35d4e8179f/5E00322E/t51.2885-19/s150x150/19051337_259903451083918_2939631516105310208_a.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com",
+            "ref": "https://www.instagram.com/philippinediscoveries/"
+          },
+          "location": {
+            "id": "288489830",
+            "name": "Chocolate Hills",
+            "address": "Chocolate Hills, Bohol, Philippines",
+            "lat": 9.829708,
+            "lng": 124.1396756,
+            "googleMapsUrl": "https://maps.google.com/?q=Chocolate+Hills&ftid=0x33aa3da1a65d72f7:0xd89c856a3307dd67",
+            "ref": "https://www.instagram.com/explore/locations/288489830/"
+          }
+    },
+    {
+        "kind": "instaPlace",
+        "title": "Bohol",
+        "type": "view",
+        "notes": [
+            {
+                "timestamp": null,
+                "content": "Best for freediving and underwater photos"
+            }
+        ],
+        "post": {
+            "image": "https://scontent-arn2-1.cdninstagram.com/vp/c2cb1e8ccac91529110e65184db8c325/5E123D1F/t51.2885-15/e35/65779417_488733825269536_6102754288666305699_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com&_nc_cat=104",
+            "ref": "https://www.instagram.com/p/BzR7G86nO2K/",
+            "likes": "6407"
+          },
+          "author": {
+            "username": "girlsthatfreedive",
+            "avatar": "https://scontent-arn2-1.cdninstagram.com/vp/6b0d9208f7d2ba9be141b083c42be6ab/5E13FC23/t51.2885-19/s150x150/62184271_700266333728772_7206450073188696064_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com",
+            "ref": "https://www.instagram.com/girlsthatfreedive/"
+          },
+          "location": {
+            "id": "234552031",
+            "name": "Bohol",
+            "address": "Bohol, Philippines",
+            "lat": 9.849991099999999,
+            "lng": 124.1435427,
+            "googleMapsUrl": "https://maps.google.com/?q=Bohol,+Philippines&ftid=0x33aa17de1ba154df:0x6bc8bf042118d020",
+            "ref": "https://www.instagram.com/explore/locations/234552031/"
+          }
+    },
+    {
+        "kind": "instaPlace",
+        "title": "Guyam Island",
+        "type": "view",
+        "post": {
+            "image": "https://scontent-arn2-1.cdninstagram.com/vp/3d51e02bf9c335580f32f6386881dc75/5DF3D2F6/t51.2885-15/e35/46171901_924527881077226_2069400480917284897_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com&_nc_cat=110",
+            "ref": "https://www.instagram.com/p/BraFl8yFrvB/",
+            "likes": "702"
+          },
+          "author": {
+            "username": "mustvisitph",
+            "avatar": "https://scontent-arn2-1.cdninstagram.com/vp/f079096845d0bfe71519101f385defb9/5E0F5058/t51.2885-19/s150x150/43913309_2570697706273553_3329357668883103744_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com",
+            "ref": "https://www.instagram.com/mustvisitph/"
+          },
+          "location": {
+            "id": "850834901",
+            "name": "Guyam Island",
+            "address": "Guyam Island, General Luna, Philippines",
+            "lat": 9.7651337,
+            "lng": 126.1679471,
+            "googleMapsUrl": "https://maps.google.com/?q=Guyam+Island&ftid=0x3303f67b01d381f1:0x2a814bf5ecff40e0",
+            "ref": "https://www.instagram.com/explore/locations/850834901/"
+          }
+    },
+    {
+        "kind": "instaPlace",
+        "title": "Las Cabanas, El Nido",
+        "type": "view",
+        "post": {
+            "image": "https://scontent-arn2-1.cdninstagram.com/vp/0c064a30fcbb18c4786184d1a6393d36/5E0B87C8/t51.2885-15/e35/46768031_360769791147825_7135257547685113122_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com&_nc_cat=109",
+            "ref": "https://www.instagram.com/p/BrtF4i2Fp2l/",
+            "likes": "1021"
+          },
+          "author": {
+            "username": "mustvisitph",
+            "avatar": "https://scontent-arn2-1.cdninstagram.com/vp/f079096845d0bfe71519101f385defb9/5E0F5058/t51.2885-19/s150x150/43913309_2570697706273553_3329357668883103744_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com",
+            "ref": "https://www.instagram.com/mustvisitph/"
+          },
+          "location": {
+            "id": "761166784091514",
+            "name": "Las Cabanas, El Nido, Palawan",
+            "address": "El Nido, Palawan, Philippines",
+            "lat": 11.1440874,
+            "lng": 119.3929982,
+            "googleMapsUrl": "https://maps.google.com/?cid=1153003209574481312",
+            "ref": "https://www.instagram.com/explore/locations/761166784091514/"
+          }
+    },
+    {
+        "kind": "instaPlace",
+        "title": "Siargao Island",
+        "type": "view",
+        "post": {
+            "image": "https://scontent-arn2-1.cdninstagram.com/vp/a480f294c9accfa215079d5f0314458c/5DF55027/t51.2885-15/e35/p1080x1080/61572750_2418291991727300_4891947965231696398_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com&_nc_cat=108",
+            "ref": "https://www.instagram.com/p/BynZxc6Apwy/",
+            "likes": "5798"
+          },
+          "author": {
+            "username": "kylevollaers",
+            "avatar": "https://scontent-arn2-1.cdninstagram.com/vp/f07951ffeda51b9ac2fc0bdc3c23460e/5DF9DDC5/t51.2885-19/s150x150/54732486_1241152602705641_9196375564649234432_n.jpg?_nc_ht=scontent-arn2-1.cdninstagram.com",
+            "ref": "https://www.instagram.com/kylevollaers/"
+          },
+          "location": {
+            "id": "1573540072717382",
+            "name": "Siargao Island, Philippines",
+            "address": "Siargao Island, Philippines",
+            "lat": 9.8481883,
+            "lng": 126.0458437,
+            "googleMapsUrl": "https://maps.google.com/?q=Siargao+Island&ftid=0x3304043652d9e9b3:0xd4c56a60c9a11b84",
+            "ref": "https://www.instagram.com/explore/locations/1573540072717382/"
+          }
+    }
+]
