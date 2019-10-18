@@ -1,10 +1,11 @@
+/* eslint-disable global-require */
 import { URL } from 'url';
 import got from 'got';
 import { createClient } from '@google/maps';
 
 const googleMapsClient = createClient({
-    key: 'AIzaSyCdOCj0doOo5--OVejnyliXbtZ-hgRnq5A',
-    Promise: Promise
+  key: 'AIzaSyCdOCj0doOo5--OVejnyliXbtZ-hgRnq5A',
+  Promise,
 });
 
 const openGraphData = [
@@ -40,14 +41,11 @@ interface StrategyInstagramData {
     lng: number;
     googleMapsUrl: string;
     ref: string;
-  }
+  };
 }
 
 export async function instagram(url: URL): Promise<StrategyInstagramData> {
-  const scraper = require('metascraper')([
-    ...openGraphData,
-    instagramData,
-  ]);
+  const scraper = require('metascraper')([...openGraphData, instagramData]);
   const { body } = await got(url.href);
   const meta = await scraper({ html: body, url: url.href });
   const instaParsed = meta.instagram;
@@ -80,8 +78,8 @@ export async function instagram(url: URL): Promise<StrategyInstagramData> {
       lat: placePos.geometry.location.lat,
       lng: placePos.geometry.location.lng,
       googleMapsUrl: placeInfo.url,
-      ref: `https://www.instagram.com/explore/locations/${instaParsed.location.id}/`
-    }
+      ref: `https://www.instagram.com/explore/locations/${instaParsed.location.id}/`,
+    },
   };
 
   return result;

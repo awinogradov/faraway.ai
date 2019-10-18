@@ -1,5 +1,5 @@
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
-import {GoogleSignin} from 'react-native-google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { GoogleSignin } from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 
 export function createGglSignin(errorResolver: (e: Error) => void) {
@@ -22,10 +22,7 @@ export function createGglSignin(errorResolver: (e: Error) => void) {
 export function createFbSignin(errorResolver: (e: Error) => void) {
   return async () => {
     try {
-      const result = await LoginManager.logInWithPermissions([
-        'public_profile',
-        'email',
-      ]);
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
       if (result.isCancelled) {
         throw new Error('User cancelled request');
@@ -36,14 +33,10 @@ export function createFbSignin(errorResolver: (e: Error) => void) {
       const data = await AccessToken.getCurrentAccessToken();
 
       if (!data) {
-        throw new Error(
-          'Something went wrong obtaining the users access token',
-        );
+        throw new Error('Something went wrong obtaining the users access token');
       }
 
-      const credential = await auth.FacebookAuthProvider.credential(
-        data.accessToken,
-      );
+      const credential = await auth.FacebookAuthProvider.credential(data.accessToken);
 
       await auth()
         .signInWithCredential(credential)

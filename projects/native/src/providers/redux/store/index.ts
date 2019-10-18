@@ -1,11 +1,11 @@
 import auth from '@react-native-firebase/auth';
-import {AppState} from 'react-native';
+import { AppState } from 'react-native';
 
-import {extractUser} from '../actions/user';
-
-import {configureStore, saga} from './configure';
+import { extractUser } from '../actions/user';
 import rootSaga from '../sagas';
-import {GlobalState} from './types';
+
+import { configureStore, saga } from './configure';
+import { GlobalState } from './types';
 
 const intitalState: GlobalState = {
   user: {
@@ -19,7 +19,7 @@ const intitalState: GlobalState = {
   },
 };
 
-export const {store, persistor} = configureStore(intitalState);
+export const { store, persistor } = configureStore(intitalState);
 
 saga.run(rootSaga);
 

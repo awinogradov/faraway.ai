@@ -1,14 +1,15 @@
-import {Auth} from '@react-native-firebase/auth';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 export enum userActionTypes {
   AUTH_CHANGE = 'user/AUTH_CHANGE',
 }
 
-export type userActions = ReturnType<typeof userAuthChange>;
-
-export const userAuthChange = (user: Auth.User) => ({
+export const userAuthChange = (user: FirebaseAuthTypes.User) => ({
   type: userActionTypes.AUTH_CHANGE,
   payload: user,
 });
 
-export const extractUser = (user: any) => (user ? user._user : null);
+// eslint-disable-next-line no-underscore-dangle
+export const extractUser = (user: FirebaseAuthTypes.User) => (user ? user._user : null);
+
+export type userActions = ReturnType<typeof userAuthChange>;

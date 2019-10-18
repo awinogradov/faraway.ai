@@ -1,13 +1,14 @@
 import React from 'react';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {Navigation} from 'react-native-navigation';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Navigation } from 'react-native-navigation';
 
-import {store, persistor} from '../providers/redux/store';
+import { store, persistor } from '../providers/redux/store';
 
 import Root from './Root';
 
 function WrappedComponent(Component: React.ComponentType) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function inject(props: any) {
     const EnhancedComponent = () => (
       <Provider store={store}>
