@@ -1,8 +1,8 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface TitleProps {
-  lvl: 1 | 2 | 3 | 4;
+  lvl: 1 | 2;
   style?: React.CSSProperties;
   children: string;
 }
@@ -37,6 +37,4 @@ const TitlePresenter = styled.Text`
   `};
 `;
 
-export const Title: React.FC<TitleProps> = props => (
-  <TitlePresenter {...props} />
-);
+export const Title: React.FC<TitleProps> = props => <TitlePresenter {...props} />;

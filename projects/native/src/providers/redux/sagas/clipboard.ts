@@ -1,14 +1,14 @@
-import {put, takeEvery, call} from 'redux-saga/effects';
-import {Clipboard} from 'react-native';
+import { put, takeEvery, call } from 'redux-saga/effects';
+import { Clipboard } from 'react-native';
 import isUrl from 'validator/lib/isURL';
-import {firebase} from '@react-native-firebase/functions';
+import { firebase } from '@react-native-firebase/functions';
 
-import {appActionTypes} from '../actions/app';
-import {clipboardRead, clipboardWrite} from '../actions/clipboard';
+import { appActionTypes } from '../actions/app';
+import { clipboardRead, clipboardWrite } from '../actions/clipboard';
 
 async function callCloudFunctionParse(url: string) {
   try {
-    const data = await firebase.functions().httpsCallable('parse')({url});
+    const data = await firebase.functions().httpsCallable('parse')({ url });
     console.log(data);
   } catch (e) {
     console.error(e);

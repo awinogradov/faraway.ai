@@ -73,10 +73,10 @@ export interface CardInstaPointData extends CardBase {
     lng: number;
     googleMapsUrl: string;
     ref: string;
-  }
+  };
 }
 
 export interface TravelPlanData {
-  cards: Array<CardFlighData | CardAccomodationData | CardPointData | CardInstaPointData>
+  cards: Array<CardFlighData | CardAccomodationData | CardPointData | CardInstaPointData>;
   days: number[];
-};
+}

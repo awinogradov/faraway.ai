@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {Text, View, ScrollView, Image} from 'react-native';
-import {format, toDate, addMonths, isSunday, isSaturday} from 'date-fns';
+import { Text, View, ScrollView, Image } from 'react-native';
+import { format, toDate, addMonths, isSunday, isSaturday } from 'date-fns';
 import Swiper from 'react-native-swiper';
 
-import {Title} from '../Title';
+import { Title } from '../Title';
+
 import {
   TravelPlanData,
   CardFlighData,
@@ -69,8 +70,8 @@ interface FlightDateProps {
   timestamp: number;
 }
 
-const FlightDate: React.FC<FlightDateProps> = ({timestamp}) => (
-  <Text style={{fontSize: 14}}>{format(timestamp, 'hh:mm')}</Text>
+const FlightDate: React.FC<FlightDateProps> = ({ timestamp }) => (
+  <Text style={{ fontSize: 14 }}>{format(timestamp, 'hh:mm')}</Text>
 );
 
 interface FlightDurationProps {
@@ -78,19 +79,14 @@ interface FlightDurationProps {
   destination: number;
 }
 
-const FlightDuration: React.FC<FlightDurationProps> = ({
-  origin,
-  destination,
-}) => {
+const FlightDuration: React.FC<FlightDurationProps> = ({ origin, destination }) => {
   const originDay = format(callibrateDate(origin), 'dd');
   const destinationDay = format(callibrateDate(destination), 'dd');
   const showOvernightIcon = originDay !== destinationDay;
 
   return (
-    <View style={{paddingBottom: 8}}>
-      <Text style={{fontSize: 16, paddingBottom: 5, fontWeight: 'bold'}}>
-        Flight
-      </Text>
+    <View style={{ paddingBottom: 8 }}>
+      <Text style={{ fontSize: 16, paddingBottom: 5, fontWeight: 'bold' }}>Flight</Text>
       <Text>
         <FlightDate timestamp={origin} />
         {' - '}
@@ -98,10 +94,7 @@ const FlightDuration: React.FC<FlightDurationProps> = ({
         {showOvernightIcon && (
           <>
             {' '}
-            <Image
-              source={require('../../../assets/overnight.png')}
-              style={{width: 16, height: 16}}
-            />
+            <Image source={require('../../../assets/overnight.png')} style={{ width: 16, height: 16 }} />
           </>
         )}
       </Text>
@@ -111,31 +104,27 @@ const FlightDuration: React.FC<FlightDurationProps> = ({
 
 const CardFlight: React.FC<Omit<CardFlighData, 'kind'>> = props => (
   <Card>
-    <View style={{flexDirection: 'row', paddingBottom: 10}}>
-      <View style={{position: 'relative'}}>
-        <Text style={{fontSize: 32, fontWeight: 'bold'}}>
-          {props.origin.airport}
-        </Text>
+    <View style={{ flexDirection: 'row', paddingBottom: 10 }}>
+      <View style={{ position: 'relative' }}>
+        <Text style={{ fontSize: 32, fontWeight: 'bold' }}>{props.origin.airport}</Text>
 
         {props.origin.terminal && (
-          <View style={{position: 'absolute', top: -5, right: -20, width: 20}}>
-            <Text style={{fontSize: 14}}>{props.origin.terminal}</Text>
+          <View style={{ position: 'absolute', top: -5, right: -20, width: 20 }}>
+            <Text style={{ fontSize: 14 }}>{props.origin.terminal}</Text>
           </View>
         )}
       </View>
 
-      <View style={{paddingLeft: 15, paddingRight: 15}}>
-        <Text style={{fontSize: 32}}> → </Text>
+      <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+        <Text style={{ fontSize: 32 }}> → </Text>
       </View>
 
-      <View style={{position: 'relative'}}>
-        <Text style={{fontSize: 32, fontWeight: 'bold'}}>
-          {props.destination.airport}
-        </Text>
+      <View style={{ position: 'relative' }}>
+        <Text style={{ fontSize: 32, fontWeight: 'bold' }}>{props.destination.airport}</Text>
 
         {props.destination.terminal && (
-          <View style={{position: 'absolute', top: -5, right: -20, width: 20}}>
-            <Text style={{fontSize: 14}}>{props.destination.terminal}</Text>
+          <View style={{ position: 'absolute', top: -5, right: -20, width: 20 }}>
+            <Text style={{ fontSize: 14 }}>{props.destination.terminal}</Text>
           </View>
         )}
       </View>
@@ -146,19 +135,17 @@ const CardFlight: React.FC<Omit<CardFlighData, 'kind'>> = props => (
         flexDirection: 'row',
         alignItems: 'flex-start',
         paddingBottom: 10,
-      }}>
-      <Text style={{fontSize: 16}}>{props.company}</Text>
+      }}
+    >
+      <Text style={{ fontSize: 16 }}>{props.company}</Text>
 
       <Text> </Text>
 
-      <Text style={{fontSize: 16, fontWeight: 'bold'}}>#</Text>
-      <Text style={{fontSize: 16}}>{props.number}</Text>
+      <Text style={{ fontSize: 16, fontWeight: 'bold' }}>#</Text>
+      <Text style={{ fontSize: 16 }}>{props.number}</Text>
     </View>
 
-    <FlightDuration
-      origin={props.origin.timestamp}
-      destination={props.destination.timestamp}
-    />
+    <FlightDuration origin={props.origin.timestamp} destination={props.destination.timestamp} />
   </Card>
 );
 
@@ -175,18 +162,18 @@ interface AccommodationDateProps {
   timestamp: number;
 }
 
-const TimeFormatter: React.FC<AccommodationDateProps> = ({timestamp}) => (
-  <Text style={{fontSize: 14}}>{format(timestamp, 'hh:mm')}</Text>
+const TimeFormatter: React.FC<AccommodationDateProps> = ({ timestamp }) => (
+  <Text style={{ fontSize: 14 }}>{format(timestamp, 'hh:mm')}</Text>
 );
 
-const Timing: React.FC<AccommodationTimingProps> = ({range}) => (
-  <View style={{paddingBottom: 5}}>
+const Timing: React.FC<AccommodationTimingProps> = ({ range }) => (
+  <View style={{ paddingBottom: 5 }}>
     <Text>
       <TimeFormatter timestamp={range[0]} />
       {range[1] && (
         <Text>
-          {' - '}
-          <TimeFormatter timestamp={range[1]} />
+          {' '}
+          - <TimeFormatter timestamp={range[1]} />
         </Text>
       )}
     </Text>
@@ -203,13 +190,9 @@ enum AccommodationProviders {
   'airbnb' = 'AirBnB',
 }
 
-const CardAccomodation: React.FC<
-  Omit<CardAccomodationData, 'kind'>
-> = props => (
+const CardAccomodation: React.FC<Omit<CardAccomodationData, 'kind'>> = props => (
   <Card>
-    <Text style={{fontSize: 28, fontWeight: 'bold', paddingBottom: 10}}>
-      {props.title}
-    </Text>
+    <Text style={{ fontSize: 28, fontWeight: 'bold', paddingBottom: 10 }}>{props.title}</Text>
 
     <View>
       <View
@@ -217,22 +200,22 @@ const CardAccomodation: React.FC<
           paddingBottom: 10,
           flexDirection: 'row',
           alignItems: 'flex-start',
-        }}>
-        <Text style={{fontSize: 16, lineHeight: 20}}>
-          {AccommodationProviders[props.provider]}
-        </Text>
+        }}
+      >
+        <Text style={{ fontSize: 16, lineHeight: 20 }}>{AccommodationProviders[props.provider]}</Text>
 
         <Text
           style={{
             fontSize: 8,
             color: accommodationProvidersColorsMap[props.provider],
             lineHeight: 12,
-          }}>
+          }}
+        >
           ●
         </Text>
       </View>
 
-      <Text style={{fontSize: 16, fontWeight: 'bold', paddingBottom: 8}}>
+      <Text style={{ fontSize: 16, fontWeight: 'bold', paddingBottom: 8 }}>
         {AccommodationActions[props['check-in'] ? 'check-in' : 'check-out']}
       </Text>
 
@@ -243,13 +226,11 @@ const CardAccomodation: React.FC<
 
 const CardPoint: React.FC<Omit<CardPointData, 'kind'>> = props => (
   <Card>
-    <Text style={{fontSize: 28, fontWeight: 'bold', paddingBottom: 10}}>
-      {props.title}
-    </Text>
+    <Text style={{ fontSize: 28, fontWeight: 'bold', paddingBottom: 10 }}>{props.title}</Text>
 
     {props.hours && (
       <View>
-        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Hours</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Hours</Text>
 
         <Timing range={props.hours} />
       </View>
@@ -264,11 +245,9 @@ const InstaPoint: React.FC<Omit<CardInstaPointData, 'kind'>> = props => (
         flexDirection: 'row',
         alignItems: 'flex-start',
         paddingBottom: 5,
-      }}>
-      <Image
-        source={{uri: props.post.image}}
-        style={{width: 100, height: 100, borderRadius: 5}}
-      />
+      }}
+    >
+      <Image source={{ uri: props.post.image }} style={{ width: 100, height: 100, borderRadius: 5 }} />
 
       <Text
         style={{
@@ -276,41 +255,37 @@ const InstaPoint: React.FC<Omit<CardInstaPointData, 'kind'>> = props => (
           fontWeight: 'bold',
           paddingLeft: 10,
           maxWidth: 190,
-        }}>
+        }}
+      >
         {props.title}
       </Text>
     </View>
 
     {props.hours && (
       <View>
-        <Text style={{fontSize: 12, fontWeight: 'bold'}}>Hours: </Text>
+        <Text style={{ fontSize: 12, fontWeight: 'bold' }}>Hours: </Text>
 
         <Timing range={props.hours} />
       </View>
     )}
 
-    <View style={{borderBottomWidth: 1, borderBottomColor: '#ccc', width: 75}}>
-      <Text style={{fontSize: 12}}>Point on map</Text>
+    <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', width: 75 }}>
+      <Text style={{ fontSize: 12 }}>Point on map</Text>
     </View>
   </Card>
 );
 
-const InstaCollectionPoint: React.FC<
-  Omit<CardInstaPointData, 'kind'>
-> = props => (
+const InstaCollectionPoint: React.FC<Omit<CardInstaPointData, 'kind'>> = props => (
   <RelatedCard>
-    <View style={{flexDirection: 'row', paddingBottom: 5}}>
-      <Image
-        source={{uri: props.post.image}}
-        style={{width: 50, height: 50, borderRadius: 5}}
-      />
+    <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
+      <Image source={{ uri: props.post.image }} style={{ width: 50, height: 50, borderRadius: 5 }} />
 
-      <View style={{paddingLeft: 5, maxWidth: 125}}>
-        <Text style={{fontSize: 13, paddingBottom: 5}}>{props.title}</Text>
+      <View style={{ paddingLeft: 5, maxWidth: 125 }}>
+        <Text style={{ fontSize: 13, paddingBottom: 5 }}>{props.title}</Text>
         {props.notes &&
           props.notes.map((note, n) => {
             return (
-              <Text style={{fontSize: 11, paddingBottom: 5}} key={n}>
+              <Text style={{ fontSize: 11, paddingBottom: 5 }} key={n}>
                 {note.content}
               </Text>
             );
@@ -318,8 +293,8 @@ const InstaCollectionPoint: React.FC<
       </View>
     </View>
 
-    <View style={{borderBottomWidth: 1, borderBottomColor: '#ccc', width: 75}}>
-      <Text style={{fontSize: 12}}>Point on map</Text>
+    <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', width: 75 }}>
+      <Text style={{ fontSize: 12 }}>Point on map</Text>
     </View>
   </RelatedCard>
 );
@@ -339,7 +314,7 @@ const callibrateDate = (date: number | Date) => addMonths(toDate(date), -1);
 
 export const TravelPlan: React.FC = () => (
   <TravelPlanPresenter>
-    <View style={{position: 'absolute', top: 0}}>
+    <View style={{ position: 'absolute', top: 0 }}>
       <Title lvl={1}>Philippines</Title>
 
       <CollectionPresenter>
@@ -347,8 +322,7 @@ export const TravelPlan: React.FC = () => (
 
         <CollectionCarousel horizontal>
           {collectionData.map((card, h) => {
-            const CardRenderer: React.ComponentType<any> =
-              collectionCardsMap[card.kind];
+            const CardRenderer: React.ComponentType = collectionCardsMap[card.kind];
 
             return CardRenderer ? <CardRenderer key={h} {...card} /> : null;
           })}
@@ -361,15 +335,12 @@ export const TravelPlan: React.FC = () => (
         {travelData.days.sort().map((timestamp, i) => {
           const currentDate = callibrateDate(timestamp);
           const isWeekend = isSunday(currentDate) || isSaturday(currentDate);
-          const dayCards = travelData.cards.filter(
-            card => card.timestamp === timestamp,
-          );
+          const dayCards = travelData.cards.filter(card => card.timestamp === timestamp);
           const dayColor = isWeekend ? '#db6388' : '#000';
 
           const cards = dayCards
             .map((card, j) => {
-              const CardRenderer: React.ComponentType<any> =
-                cardsMap[card.kind];
+              const CardRenderer: React.ComponentType<any> = cardsMap[card.kind];
 
               return CardRenderer ? <CardRenderer key={j} {...card} /> : null;
             })
@@ -378,15 +349,11 @@ export const TravelPlan: React.FC = () => (
           return cards.length ? (
             <Day key={i}>
               <DayDate>
-                <View style={{paddingRight: 5}}>
-                  <Text style={{fontSize: 48, lineHeight: 48, color: dayColor}}>
-                    {format(currentDate, 'dd')}
-                  </Text>
+                <View style={{ paddingRight: 5 }}>
+                  <Text style={{ fontSize: 48, lineHeight: 48, color: dayColor }}>{format(currentDate, 'dd')}</Text>
                 </View>
 
-                <Text style={{fontSize: 18, color: dayColor}}>
-                  {format(currentDate, 'LLL')}
-                </Text>
+                <Text style={{ fontSize: 18, color: dayColor }}>{format(currentDate, 'LLL')}</Text>
               </DayDate>
 
               <CardsList>{cards}</CardsList>

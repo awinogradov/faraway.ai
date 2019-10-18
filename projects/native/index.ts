@@ -1,4 +1,4 @@
-import {Navigation} from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
 import './src/screens';
 import './src/providers/redux/subscriptions/auth';

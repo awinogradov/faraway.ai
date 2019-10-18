@@ -1,5 +1,5 @@
-import {Auth} from '@react-native-firebase/auth';
-import {AppStateStatus} from 'react-native';
+import { Auth } from '@react-native-firebase/auth';
+import { AppStateStatus } from 'react-native';
 
 export interface GlobalState {
   user: {
