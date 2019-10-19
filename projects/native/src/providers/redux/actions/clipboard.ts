@@ -13,4 +13,4 @@ export const clipboardWrite = (clipboardContent: string) => ({
   payload: clipboardContent,
 });
 
-export type ClipboardActions = ReturnType<typeof clipboardRead> | ReturnType<typeof clipboardWrite>;
+export type ClipboardActions = ReturnType<typeof clipboardRead | typeof clipboardWrite>;

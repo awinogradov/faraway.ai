@@ -4,6 +4,7 @@ import { AppStateStatus } from 'react-native';
 export interface GlobalState {
   user: {
     auth: FirebaseAuthTypes.User | null;
+    error?: Error;
   };
   clipboard: {
     content?: string;
