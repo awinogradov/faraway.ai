@@ -9,7 +9,4 @@ export const userAuthChange = (user: FirebaseAuthTypes.User) => ({
   payload: user,
 });
 
-// eslint-disable-next-line no-underscore-dangle
-export const extractUser = (user: FirebaseAuthTypes.User) => (user ? user._user : null);
-
 export type userActions = ReturnType<typeof userAuthChange>;

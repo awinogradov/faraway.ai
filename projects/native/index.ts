@@ -1,15 +1,8 @@
-import { Navigation } from 'react-native-navigation';
+import { AppRegistry } from 'react-native';
 
-import './src/screens';
 import './src/providers/redux/subscriptions/auth';
 import './src/providers/redux/subscriptions/appState';
+import { App } from './src/screens';
+import { name } from './app.json';
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: 'farawayai.root',
-      },
-    },
-  });
-});
+AppRegistry.registerComponent(name, () => App);
