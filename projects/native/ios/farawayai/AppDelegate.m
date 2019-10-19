@@ -49,14 +49,7 @@
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   
-  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                                openURL:url
-                                                      sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                                           annotation:options[UIApplicationOpenURLOptionsAnnotationKey]]
-                || [RNGoogleSignin application:application
-                                       openURL:url
-                             sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                    annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+  BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] || [RNGoogleSignin application:application openURL:url options:options];
 
   return handled;
 }
