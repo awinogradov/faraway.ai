@@ -1,9 +1,9 @@
-import { Auth } from '@react-native-firebase/auth';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
 
 export interface GlobalState {
   user: {
-    auth?: Auth.User | null;
+    auth: FirebaseAuthTypes.User | null;
   };
   clipboard: {
     content?: string;
