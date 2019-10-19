@@ -14,4 +14,4 @@ export const stateActive = () => ({
   type: appActionTypes.STATE_ACTIVE,
 });
 
-export type AppActions = ReturnType<typeof stateChange> | ReturnType<typeof stateActive>;
+export type AppActions = ReturnType<typeof stateChange | typeof stateActive>;

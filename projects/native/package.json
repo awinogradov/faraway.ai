@@ -20,8 +20,6 @@
     "date-fns": "2.5.1",
     "history": "4.10.1",
     "immer": "4.0.1",
-    "lodash.debounce": "4.0.8",
-    "lodash.throttle": "4.1.1",
     "react": "16.10.2",
     "react-native": "0.61.2",
     "react-native-fbsdk": "1.0.4",

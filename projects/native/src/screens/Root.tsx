@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { View, Button, Text } from 'react-native';
 import styled from 'styled-components/native';
 
-import { GlobalState } from '../providers/redux/store';
-import { signOut } from '../providers/firebase/auth';
+import { userSignout } from '../providers/redux/actions/user';
 import { TravelPlan } from '../components/TravelPlan';
 
 const StyledView = styled.View`
@@ -12,24 +12,24 @@ const StyledView = styled.View`
   background: #fff;
 `;
 
-export interface RootScreenProps {
-  user: GlobalState['user'];
-}
+const mapStateToProps = state => ({ user: state.user });
+const mapDispatchProps = (dispatch: Dispatch) => bindActionCreators({ signout: userSignout }, dispatch);
+
+export type RootScreenProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchProps>;
 
 const Root: React.FC<RootScreenProps> = props => {
   return (
     <StyledView>
       <View style={{ paddingTop: 100 }}>
         <Text>Welcome {props.user.auth.email}</Text>
-        <Button onPress={signOut} title="Logout" />
+        <Button onPress={props.signout} title="Logout" />
       </View>
       <TravelPlan />
     </StyledView>
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps)(Root);
+export default connect(
+  mapStateToProps,
+  mapDispatchProps,
+)(Root);
