@@ -10,7 +10,7 @@ export interface RootScreenProps {
   user: GlobalState['user'];
 }
 
-const Root: React.FC<RootScreenProps> = ({ user }) => (user ? <Page /> : <Signin />);
+const Root: React.FC<RootScreenProps> = ({ user }) => (user.auth ? <Page /> : <Signin />);
 
 const mapStateToProps = ({ user }: GlobalState) => ({
   user,

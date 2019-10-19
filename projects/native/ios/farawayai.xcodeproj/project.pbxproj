@@ -12,7 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		BFEF0970C07133C3457242F4 /* libPods-farawayai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B38CC53D224BAE2050C60D /* libPods-farawayai.a */; };
-		E357A04E233516980031A8E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E357A04D233516980031A8E1 /* GoogleService-Info.plist */; };
+		E36CE429235B5E0D00A25B1C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E36CE428235B5E0D00A25B1C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		B108ED0106A50FDAF13AB325 /* Pods-farawayai-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-farawayai-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-farawayai-tvOSTests/Pods-farawayai-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C8D486AA48CCD48B9F46B6BA /* Pods-farawayaiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-farawayaiTests.release.xcconfig"; path = "Target Support Files/Pods-farawayaiTests/Pods-farawayaiTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE61A78E38650E058ECB46ED /* Pods-farawayai.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-farawayai.debug.xcconfig"; path = "Target Support Files/Pods-farawayai/Pods-farawayai.debug.xcconfig"; sourceTree = "<group>"; };
-		E357A04D233516980031A8E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E36CE428235B5E0D00A25B1C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FB02EDD838FE43C9F4E14C30 /* Pods-farawayai-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-farawayai-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-farawayai-tvOS/Pods-farawayai-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -75,13 +75,13 @@
 		13B07FAE1A68108700A75B9A /* farawayai */ = {
 			isa = PBXGroup;
 			children = (
+				E36CE428235B5E0D00A25B1C /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
-				E357A04D233516980031A8E1 /* GoogleService-Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = farawayai;
@@ -210,7 +210,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				E357A04E233516980031A8E1 /* GoogleService-Info.plist in Resources */,
+				E36CE429235B5E0D00A25B1C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		67F5EA305EBCD5F91A231966 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
