@@ -1,14 +1,20 @@
-// import { takeEvery } from 'redux-saga/effects';
-// import database from '@react-native-firebase/database';
+import { takeEvery, put, call } from 'redux-saga/effects';
+import database from '@react-native-firebase/database';
 
-// import { clipboardActionTypes } from '../actions/clipboard';
+import { addActionTypes, addPointSuccess } from '../actions/add';
 
-// async function addToCloak(data) {
-//   const ref = database().ref('/cloak/test}');
+async function addToCloak(data) {
+  const ref = database().ref(`/cloak/test/${data.location.id}`);
 
-//   await ref.set(data);
-// }
+  return ref.set(data);
+}
 
-// export function* databaseSaga() {
-//   yield takeEvery(clipboardActionTypes.CONTENT_WRITE, resolveSourseInClipboard);
-// }
+function* addPointToDatabase(data) {
+  yield call(addToCloak, data.payload);
+
+  yield put(addPointSuccess());
+}
+
+export function* databaseSaga() {
+  yield takeEvery(addActionTypes.ADD_POINT, addPointToDatabase);
+}

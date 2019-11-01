@@ -9,6 +9,11 @@ export interface GlobalState {
   clipboard: {
     content?: string;
   };
+  add: {
+    visible: boolean;
+    kind?: 'clipboard';
+    data?: object;
+  };
   app: {
     state: AppStateStatus;
   };

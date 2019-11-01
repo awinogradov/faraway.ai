@@ -5,6 +5,7 @@ import { format, toDate, addMonths, isSunday, isSaturday } from 'date-fns';
 import Swiper from 'react-native-swiper';
 
 import { Title } from '../Title';
+import { InstagramPreview } from '../InstagramPreview';
 
 import {
   TravelPlanData,
@@ -277,21 +278,7 @@ const InstaPoint: React.FC<Omit<CardInstaPointData, 'kind'>> = props => (
 
 const InstaCollectionPoint: React.FC<Omit<CardInstaPointData, 'kind'>> = props => (
   <RelatedCard>
-    <View style={{ flexDirection: 'row', paddingBottom: 5 }}>
-      <Image source={{ uri: props.post.image }} style={{ width: 50, height: 50, borderRadius: 5 }} />
-
-      <View style={{ paddingLeft: 5, maxWidth: 125 }}>
-        <Text style={{ fontSize: 13, paddingBottom: 5 }}>{props.title}</Text>
-        {props.notes &&
-          props.notes.map((note, n) => {
-            return (
-              <Text style={{ fontSize: 11, paddingBottom: 5 }} key={n}>
-                {note.content}
-              </Text>
-            );
-          })}
-      </View>
-    </View>
+    <InstagramPreview size="s" thumb={props.post.image} title={props.title} notes={props.notes} />
 
     <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', width: 75 }}>
       <Text style={{ fontSize: 12 }}>Point on map</Text>
