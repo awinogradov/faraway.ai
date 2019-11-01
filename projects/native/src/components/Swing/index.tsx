@@ -1,3 +1,4 @@
+/* eslint-disable prefer-object-spread */
 import React from 'react';
 import {
   View,
@@ -13,13 +14,17 @@ import styled, { css } from 'styled-components/native';
 
 export interface SwingProps {
   visible?: boolean;
+  style?: StyleProp<ViewStyle>;
+  onOpen?: () => void;
   onClose?: () => void;
+  onPreviewOpen?: () => void;
+  onPreviewClose?: () => void;
 }
 
 interface SwingState {
   pan: Animated.ValueXY;
   animatedYValue: number;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   opened: boolean;
   changingVisibilityAllowed?: boolean;
 }
@@ -170,8 +175,11 @@ export class Swing extends React.Component<SwingProps, SwingState> {
   }
 
   render() {
+    // eslint-disable-next-line compat/compat
+    const style = Object.assign({}, this.state.style, this.props.style);
+
     return this.props.visible ? (
-      <StyledSwingInner {...this.panResponder.panHandlers} style={this.state.style}>
+      <StyledSwingInner {...this.panResponder.panHandlers} style={style}>
         {this.props.children}
       </StyledSwingInner>
     ) : null;

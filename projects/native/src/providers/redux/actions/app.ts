@@ -12,6 +12,7 @@ export const stateChange = (appState: AppStateStatus) => ({
 
 export const stateActive = () => ({
   type: appActionTypes.STATE_ACTIVE,
+  payload: undefined,
 });
 
 export type AppActions = ReturnType<typeof stateChange | typeof stateActive>;

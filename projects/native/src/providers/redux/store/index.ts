@@ -16,6 +16,9 @@ const intitalState: GlobalState = {
   clipboard: {
     content: undefined,
   },
+  add: {
+    visible: false,
+  },
 };
 
 export const { store, history } = configureStore(intitalState);
