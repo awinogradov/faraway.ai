@@ -1,8 +1,6 @@
-// import AsyncStorage from '@react-native-community/async-storage';
 import { createStore, applyMiddleware, compose, Middleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'remote-redux-devtools';
 import { routerMiddleware } from 'connected-react-router';
 import { createMemoryHistory } from 'history';
 
@@ -17,14 +15,18 @@ export const configureStore = (preloadedState: GlobalState) => {
   const rootReducer = createRootReducer(history);
   const middlewares: Middleware[] = [routerMiddleware(history), saga];
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let debuggWrapper = (data: any) => data;
+  const composeEnhancers =
+    // @ts-ignore
+    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+      // @ts-ignore
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) ||
+    compose;
+
   if (__DEV__) {
     middlewares.push(createLogger());
-    debuggWrapper = composeWithDevTools({ realtime: true });
   }
 
-  const store = createStore(rootReducer, preloadedState, debuggWrapper(compose(applyMiddleware(...middlewares))));
+  const store = createStore(rootReducer, preloadedState, composeEnhancers(applyMiddleware(...middlewares)));
 
   return {
     store,
