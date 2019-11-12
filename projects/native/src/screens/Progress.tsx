@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const Signin: React.FC = () => {
+const ProgressScreen: React.FC = () => {
   return (
     <View style={{ paddingTop: 100 }}>
       <Text>In progress...</Text>
@@ -9,4 +9,4 @@ const Signin: React.FC = () => {
   );
 };
 
-export default Signin;
+export default ProgressScreen;

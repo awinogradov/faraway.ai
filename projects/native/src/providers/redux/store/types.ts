@@ -1,5 +1,6 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
+import { RouterState } from 'connected-react-router';
 
 export interface GlobalState {
   user: {
@@ -17,4 +18,5 @@ export interface GlobalState {
   app: {
     state: AppStateStatus;
   };
+  router: RouterState;
 }
