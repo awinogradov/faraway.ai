@@ -8,6 +8,7 @@
     "test": "jest",
     "lint": "eslint .",
     "xcode": "open ios/farawayai.xcworkspace",
+    "debugger": "open \"rndebugger:\/\/set-debugger-loc?host=localhost&port=8081\"",
     "link-nvm-to-node": "ln -s $(which node) /usr/local/bin/node"
   },
   "dependencies": {
