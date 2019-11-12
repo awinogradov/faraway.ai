@@ -19,7 +19,7 @@ const mapDispatchProps = (dispatch: Dispatch) =>
 
 export type SigninScreenProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchProps>;
 
-const Signin: React.FC<SigninScreenProps> = props => (
+const SigninScreen: React.FC<SigninScreenProps> = props => (
   <View style={{ paddingTop: 100 }}>
     <Button onPress={props.fbSignin} title="Facebook Login" />
     <Button onPress={props.gglSignin} title="Google Login" />
@@ -31,4 +31,4 @@ const Signin: React.FC<SigninScreenProps> = props => (
 export default connect(
   mapStateToProps,
   mapDispatchProps,
-)(Signin);
+)(SigninScreen);
