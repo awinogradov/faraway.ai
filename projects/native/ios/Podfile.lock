@@ -374,6 +374,12 @@ PODS:
   - RNGoogleSignin (2.1.0):
     - GoogleSignIn (~> 5.0.0)
     - React
+  - RNSentry (1.0.9):
+    - React
+    - Sentry (~> 4.4.0)
+  - Sentry (4.4.1):
+    - Sentry/Core (= 4.4.1)
+  - Sentry/Core (4.4.1)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -416,6 +422,7 @@ DEPENDENCIES:
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -444,6 +451,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - Sentry
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -508,6 +516,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/functions"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -567,6 +577,8 @@ SPEC CHECKSUMS:
   RNFBDatabase: 8e40f40d6ef644a2eb478e72d64a9ef02a8bce58
   RNFBFunctions: f45d207e05aba8c9a09d2ba4a27e1b680f9dfb39
   RNGoogleSignin: bb1393dec8541d997fd12b7b8f43481868a34e93
+  RNSentry: 2803ba8c8129dcf26b79e9b4d8c80168be6e4390
+  Sentry: 5d312a04e369154aeac616214f4dfc3cbcc8b296
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
 PODFILE CHECKSUM: 5ed0a5e2f207e992a622cebbb77e24ba8306154f
