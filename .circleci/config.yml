@@ -33,7 +33,7 @@ workflows:
   functions:
     jobs:
       - functions-build
-      - funtions-deploy:
+      - functions-deploy:
           requires:
             - functions-build
           filters:
