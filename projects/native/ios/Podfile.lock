@@ -392,7 +392,7 @@ DEPENDENCIES:
   - Firebase/Functions
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - GoogleSignIn (~> 5.0.0)
+  - GoogleSignIn
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -581,6 +581,6 @@ SPEC CHECKSUMS:
   Sentry: 5d312a04e369154aeac616214f4dfc3cbcc8b296
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: 5ed0a5e2f207e992a622cebbb77e24ba8306154f
+PODFILE CHECKSUM: d3533a1ea2210ff4ef8d89816aa8a36f99e58827
 
 COCOAPODS: 1.8.4
