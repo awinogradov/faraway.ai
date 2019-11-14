@@ -40,7 +40,7 @@ jobs:
 
       - run:
           name: deploy
-          command: npm run deploy --prefix=projects/functions
+          command: npm run deploy:ci --prefix=projects/functions
 
 workflows:
   version: 2
