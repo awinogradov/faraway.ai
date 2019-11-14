@@ -24,6 +24,20 @@ jobs:
     docker:
       - image: circleci/node:10.16.3
     steps:
+      - checkout
+
+      - run:
+          name: common
+          command: npm ci
+
+      - run:
+          name: bootstrap
+          command: npm i --prefix=projects/functions
+
+      - run:
+          name: build
+          command: npm run build --prefix=projects/functions
+
       - run:
           name: deploy
           command: npm run deploy --prefix=projects/functions
@@ -34,8 +48,6 @@ workflows:
     jobs:
       - functions-build
       - functions-deploy:
-          requires:
-            - functions-build
           filters:
             branches:
               only: master
