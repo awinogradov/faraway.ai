@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { EntityUpdate } from '../../typings';
 import { User } from '../User/User.model';
 
 import { Collection, CollectionDraft } from './Collection.model';
@@ -7,6 +8,7 @@ export async function snapshot(collection: Collection): Promise<Collection> {
   return Collection.findOne(collection)
     .populate('createdBy')
     .populate('sharedWith')
+    .populate('notes')
     .catch(err => {
       throw new Error(err);
     });
@@ -27,16 +29,18 @@ export async function create(draft: CollectionDraft): Promise<Collection> {
 }
 
 export async function update({
-  collection,
+  entity: collection,
   diff,
-}: {
-  collection: Collection;
-  diff: Partial<CollectionDraft>;
-}): Promise<Collection> {
+}: EntityUpdate<Collection, Omit<CollectionDraft, 'createdBy'>>): Promise<Collection> {
   const draft = await Collection.findOne(collection);
 
   if (!draft) {
     throw new Error(`Can't find collection "${JSON.stringify(collection)}"`);
+  }
+
+  // @ts-ignore check for non TS usage
+  if (diff.createdBy) {
+    throw new Error(`Can't update createdBy field`);
   }
 
   Object.keys(diff).forEach(field => {

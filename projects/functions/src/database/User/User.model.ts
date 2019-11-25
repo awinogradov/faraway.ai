@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
   id: string;
   email: string;
   oauth: string;
-  created: string;
+  created: number;
   collections: CollectionDocument[];
 }
 
@@ -19,7 +19,7 @@ const UserSchema = new Schema<UserDocument>({
   id: { type: String, default: v4, unique: true },
   email: { type: String, required: true, unique: true },
   oauth: { type: String, required: true, unique: true },
-  created: { type: String, default: () => String(Date.now()) },
+  created: { type: Number, default: Date.now },
   collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
 });
 

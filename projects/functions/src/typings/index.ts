@@ -6,3 +6,8 @@ export interface ApplicationConfig {
   dbUrl: string;
   googleMapsKey: string;
 }
+
+export interface EntityUpdate<Original, Diff> {
+  entity: Original;
+  diff: Partial<Diff>;
+}
