@@ -2,8 +2,11 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import * as locationService from './Location.service';
 import { Location } from './Location.model';
+import * as locationService from './Location.service';
+import { locationDraftCreator } from './Location.seed';
+
+const testLocation = locationDraftCreator();
 
 describe(`database: ${Location.name}`, () => {
   afterEach(async () => {
@@ -11,33 +14,23 @@ describe(`database: ${Location.name}`, () => {
   });
 
   it('create', async () => {
-    const location = await locationService.snapshot({
-      title: 'ЦУМ',
-    });
-
-    const cached = await locationService.snapshot({
-      title: 'Tsum',
-    });
+    const location = await locationService.create(testLocation);
 
     expect(location.id).to.be.not.eq(undefined);
     expect(location.created).to.be.not.eq(undefined);
 
-    expect(location.title).to.be.eq('Tsum');
-    expect(location.address).to.be.eq('Petrovka Ulitsa, 2, Moskva, Russia, 125009');
-    expect(location.lat).to.be.eq(55.7608749);
-    expect(location.lng).to.be.eq(37.61981129999999);
-
-    expect(location.toJSON()).to.be.eql(cached.toJSON());
+    expect(location.title).to.be.eq(testLocation.title);
+    expect(location.address).to.be.eq(testLocation.address);
+    expect(location.lat).to.be.eq(testLocation.lat);
+    expect(location.lng).to.be.eq(testLocation.lng);
   });
 
   it('remove', async () => {
-    const location = await locationService.snapshot({
-      title: 'ЦУМ',
-    });
+    const location = await locationService.create(testLocation);
     expect(location).to.be.not.eq(null);
 
     await locationService.remove(location);
-    const found = await Location.findOne(location);
+    const found = await locationService.snapshot(location);
 
     expect(found).to.be.eq(null);
   });

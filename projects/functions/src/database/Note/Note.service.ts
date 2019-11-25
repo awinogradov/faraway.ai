@@ -1,7 +1,10 @@
+import { EntityUpdate } from '../../typings';
+
 import { Note, NoteDraft } from './Note.model';
 
 export async function snapshot(note: Note): Promise<Note> {
   return Note.findOne(note)
+    .populate('createdBy')
     .populate('collections')
     .catch(err => {
       throw new Error(err);
@@ -22,11 +25,16 @@ export async function create(draft: NoteDraft): Promise<Note> {
   return snapshot(note);
 }
 
-export async function update({ note, diff }: { note: Note; diff: Partial<NoteDraft> }): Promise<Note> {
+export async function update({ entity: note, diff }: EntityUpdate<Note, Omit<NoteDraft, 'createdBy'>>): Promise<Note> {
   const draft = await Note.findOne(note);
 
   if (!draft) {
     throw new Error(`Can't find note "${JSON.stringify(note)}"`);
+  }
+
+  // @ts-ignore check for non TS usage
+  if (diff.createdBy) {
+    throw new Error(`Can't update createdBy field`);
   }
 
   Object.keys(diff).forEach(field => {

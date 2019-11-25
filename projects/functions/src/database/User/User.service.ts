@@ -1,3 +1,5 @@
+import { EntityUpdate } from '../../typings';
+
 import { User, UserDraft } from './User.model';
 
 export async function snapshot(user: User): Promise<User> {
@@ -22,7 +24,7 @@ export async function create(draft: UserDraft): Promise<User> {
   return snapshot(user);
 }
 
-export async function update({ user, diff }: { user: User; diff: Partial<UserDraft> }): Promise<User> {
+export async function update({ entity: user, diff }: EntityUpdate<User, UserDraft>): Promise<User> {
   const draft = await User.findOne(user);
 
   if (!draft) {

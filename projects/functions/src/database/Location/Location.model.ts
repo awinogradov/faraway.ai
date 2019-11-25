@@ -26,7 +26,7 @@ const LocationSchema = new Schema<LocationDocument>({
   address: { type: String, required: true },
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
-  created: { type: Number, default: () => Date.now() },
+  created: { type: Number, default: Date.now },
 });
 
 export class Location extends mongoose.model<LocationDocument>('Location', LocationSchema) {

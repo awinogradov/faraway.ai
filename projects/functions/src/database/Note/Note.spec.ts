@@ -3,40 +3,62 @@ import 'mocha';
 import { expect } from 'chai';
 import faker from 'faker';
 
-import { NoteDraft, Note } from './Note.model';
+import { User } from '../User/User.model';
+import * as userService from '../User/User.service';
+import { userDraftCreator } from '../User/User.seed';
+
+import { Note } from './Note.model';
 import * as noteService from './Note.service';
-
-const noteDraftCreator = (): Readonly<NoteDraft> =>
-  Object.freeze({
-    content: faker.lorem.paragraphs(2),
-  });
-
-const testNote = noteDraftCreator();
+import { noteDraftCreator } from './Note.seed';
 
 describe(`database: ${Note.name}`, () => {
+  let testUser: User;
+  let anotherTestUser: User;
+
+  before(async () => {
+    testUser = await userService.create(userDraftCreator());
+    anotherTestUser = await userService.create(userDraftCreator());
+  });
+
   afterEach(async () => {
     await noteService.dangerouslyDropAllRecords();
   });
 
   it('create', async () => {
-    const note = await noteService.create(testNote);
+    const draft = noteDraftCreator({ createdBy: testUser });
+    const note = await noteService.create(draft);
 
-    expect(note).to.be.not.eq(null);
     expect(note.id).to.be.not.eq(undefined);
-    expect(note.content).to.be.eq(testNote.content);
+    expect(note.createdBy).to.be.not.eq(undefined);
+    expect(note.content).to.be.eq(draft.content);
+    expect(note.createdBy.email).to.be.eq(testUser.email);
     expect(note.collections).to.be.not.eq(undefined);
   });
 
   it('update', async () => {
     const updatedContent = faker.lorem.paragraphs(3);
 
-    const note = await noteService.create(testNote);
-    const updatedNote = await noteService.update({ note, diff: { content: updatedContent } });
+    const note = await noteService.create(noteDraftCreator({ createdBy: testUser }));
+    const updatedNote = await noteService.update({ entity: note, diff: { content: updatedContent } });
     expect(updatedNote.content).to.be.eq(updatedContent);
   });
 
+  it('update: disalow update createdBy', async () => {
+    const note = await noteService.create(noteDraftCreator({ createdBy: testUser }));
+
+    await noteService
+      .update({
+        entity: note,
+        // @ts-ignore check for non TS usage
+        diff: { createdBy: anotherTestUser },
+      })
+      .catch((err: Error) => {
+        expect(err.message).includes(`Can't update createdBy field`);
+      });
+  });
+
   it('remove', async () => {
-    const note = await noteService.create(testNote);
+    const note = await noteService.create(noteDraftCreator({ createdBy: testUser }));
     expect(note).to.be.not.eq(null);
 
     await noteService.remove(note);
@@ -46,7 +68,7 @@ describe(`database: ${Note.name}`, () => {
   });
 
   it('snapshot', async () => {
-    const note = await noteService.create(testNote);
+    const note = await noteService.create(noteDraftCreator({ createdBy: testUser }));
     const snap = await noteService.snapshot(note);
 
     expect(snap.content).to.be.eq(note.content);
