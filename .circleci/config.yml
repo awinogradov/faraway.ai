@@ -65,6 +65,7 @@ workflows:
   version: 2
   functions:
     jobs:
+      - functions-test
       - functions-build
       - functions-deploy:
           filters:
