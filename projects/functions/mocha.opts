@@ -1,0 +1,4 @@
+--require ts-node/register
+--require ./mocha.config.ts
+--require source-map-support/register
+--recursive
