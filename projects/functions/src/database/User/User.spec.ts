@@ -3,7 +3,7 @@ import 'mocha';
 import { expect } from 'chai';
 import faker from 'faker';
 
-import { UserDraft } from './User.model';
+import { UserDraft, User } from './User.model';
 import * as userService from './User.service';
 
 const userDraftCreator = (): Readonly<UserDraft> =>
@@ -15,7 +15,7 @@ const userDraftCreator = (): Readonly<UserDraft> =>
 const testUser = userDraftCreator();
 const brotherOfTestUser = userDraftCreator();
 
-describe('database: User', () => {
+describe(`database: ${User.name}`, () => {
   afterEach(async () => {
     await userService.dangerouslyDropAllRecords();
   });

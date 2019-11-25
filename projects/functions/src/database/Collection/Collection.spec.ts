@@ -6,7 +6,7 @@ import faker from 'faker';
 import * as userService from '../User/User.service';
 import { User, UserDraft } from '../User/User.model';
 
-import { CollectionDraft } from './Collection.model';
+import { CollectionDraft, Collection } from './Collection.model';
 import * as collectionService from './Collection.service';
 
 const provideTestCollection = (createdBy: User): Readonly<CollectionDraft> =>
@@ -21,7 +21,7 @@ const userDraftCreator = (): Readonly<UserDraft> =>
     oauth: faker.random.uuid(),
   });
 
-describe('database: Collection', () => {
+describe(`database: ${Collection.name}`, () => {
   let testUser: User;
   let sharedWithUser: User;
 

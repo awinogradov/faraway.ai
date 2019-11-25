@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import * as locationService from './Location.service';
 import { Location } from './Location.model';
 
-describe('database: Location', () => {
+describe(`database: ${Location.name}`, () => {
   afterEach(async () => {
     await locationService.dangerouslyDropAllRecords();
   });
