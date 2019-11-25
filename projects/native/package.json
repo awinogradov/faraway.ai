@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "start:ios": "react-native run-ios --simulator \"iPhone 11 Pro Max\"",
-    "test": "jest",
+    "test": "echo 'no tests'",
     "lint": "eslint .",
     "xcode": "open ios/farawayai.xcworkspace",
     "debugger": "open \"rndebugger://set-debugger-loc?host=localhost&port=8081\"",
