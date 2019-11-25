@@ -4,4 +4,5 @@ export interface ApplicationConfig {
   dbName: string;
   dbHost: string;
   dbUrl: string;
+  googleMapsKey: string;
 }

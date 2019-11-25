@@ -12,7 +12,7 @@ export async function snapshot(collection: Collection): Promise<Collection> {
     });
 }
 
-export async function create(draft: CollectionDraft) {
+export async function create(draft: CollectionDraft): Promise<Collection> {
   const collection = new Collection(draft);
 
   await collection.save().catch(err => {
@@ -26,7 +26,13 @@ export async function create(draft: CollectionDraft) {
   return snapshot(collection);
 }
 
-export async function update({ collection, diff }: { collection: Collection; diff: Partial<CollectionDraft> }) {
+export async function update({
+  collection,
+  diff,
+}: {
+  collection: Collection;
+  diff: Partial<CollectionDraft>;
+}): Promise<Collection> {
   const draft = await Collection.findOne(collection);
 
   if (!draft) {
@@ -45,7 +51,7 @@ export async function update({ collection, diff }: { collection: Collection; dif
   return snapshot(draft);
 }
 
-export async function share({ collection, user }: { collection: Collection; user: User }) {
+export async function share({ collection, user }: { collection: Collection; user: User }): Promise<Collection> {
   const draft = await Collection.findOne(collection);
 
   if (!draft) {

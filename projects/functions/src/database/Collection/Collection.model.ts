@@ -12,8 +12,8 @@ export interface CollectionDocument extends Document {
   sharedWith: UserDocument[];
 }
 
-type NonDraftColumns = 'title' | 'createdBy';
-export type CollectionDraft = Pick<CollectionDocument, NonDraftColumns>;
+type DraftColumns = 'title' | 'createdBy';
+export type CollectionDraft = Pick<CollectionDocument, DraftColumns>;
 
 const CollectionSchema = new Schema<CollectionDocument>({
   id: { type: String, default: v4, unique: true },
