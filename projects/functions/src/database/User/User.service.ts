@@ -8,7 +8,7 @@ export async function snapshot(user: User): Promise<User> {
     });
 }
 
-export async function create(draft: UserDraft) {
+export async function create(draft: UserDraft): Promise<User> {
   const user = new User(draft);
 
   await user.save().catch(err => {
@@ -22,7 +22,7 @@ export async function create(draft: UserDraft) {
   return snapshot(user);
 }
 
-export async function update({ user, diff }: { user: User; diff: Partial<UserDraft> }) {
+export async function update({ user, diff }: { user: User; diff: Partial<UserDraft> }): Promise<User> {
   const draft = await User.findOne(user);
 
   if (!draft) {
