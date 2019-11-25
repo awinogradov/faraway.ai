@@ -2,8 +2,7 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:prettier/recommended',
-    'prettier/react',
-    'plugin:compat/recommended',
+    'prettier/react'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,11 +16,9 @@ module.exports = {
     'import',
   ],
   env: {
-    browser: true,
     commonjs: true,
     node: true,
     es6: true,
-    mocha: true,
   },
   rules: {
     // @typescript-eslint/no-unused-vars
@@ -78,32 +75,12 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['renderer.js'],
+      files: ['*.spec.ts', '*.spec.tsx'],
       env: {
-        node: true,
-      },
-      rules: {
-        'no-param-reassign': 0,
-        'global-require': 0,
-      }
-    },
-    {
-      files: ['*.tsx?'],
-      env: {
-        browser: true,
-      },
-    },
-    {
-      files: ['*.test.tsx?'],
-      env: {
-        browser: true,
         mocha: true,
       },
-    },
-    {
-      files: ['*.hermione.js'],
-      rules: {
-        'func-names': 0,
+      globals: {
+        expect: 'readonly',
       }
     }
   ]
