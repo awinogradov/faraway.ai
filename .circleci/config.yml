@@ -16,6 +16,10 @@ jobs:
           command: npm i --prefix=projects/functions
 
       - run:
+          name: link-environment
+          command: NODE_ENV=stage npm run link-env
+
+      - run:
           name: build
           command: npm run build --prefix=projects/functions
 
@@ -35,6 +39,10 @@ jobs:
           command: npm i --prefix=projects/functions
 
       - run:
+          name: link-environment
+          command: NODE_ENV=stage npm run link-env
+
+      - run:
           name: test
           command: npm run test
 
@@ -52,6 +60,10 @@ jobs:
       - run:
           name: bootstrap
           command: npm i --prefix=projects/functions
+
+      - run:
+          name: link-environment
+          command: NODE_ENV=stage npm run link-env
 
       - run:
           name: build
