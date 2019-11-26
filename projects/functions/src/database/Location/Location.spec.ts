@@ -4,13 +4,13 @@ import { expect } from 'chai';
 
 import { Location } from './Location.model';
 import * as locationService from './Location.service';
-import { locationDraftCreator } from './Location.seed';
+import { locationDraftCreator, dangerouslyDropAllRecords } from './Location.seed';
 
 const testLocation = locationDraftCreator();
 
 describe(`database: ${Location.name}`, () => {
   afterEach(async () => {
-    await locationService.dangerouslyDropAllRecords();
+    await dangerouslyDropAllRecords();
   });
 
   it('create', async () => {

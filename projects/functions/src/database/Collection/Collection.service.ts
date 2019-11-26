@@ -1,14 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import { EntityUpdate } from '../../typings';
 import { User } from '../User/User.model';
+import { Note } from '../Note/Note.model';
+import { Attraction } from '../Attraction/Attraction.model';
 
 import { Collection, CollectionDraft } from './Collection.model';
 
 export async function snapshot(collection: Collection): Promise<Collection> {
-  return Collection.findOne(collection)
+  return Collection.findOne({ id: collection.id })
     .populate('createdBy')
-    .populate('sharedWith')
+    .populate('users')
     .populate('notes')
+    .populate('attractions')
     .catch(err => {
       throw new Error(err);
     });
@@ -21,9 +24,7 @@ export async function create(draft: CollectionDraft): Promise<Collection> {
     throw new Error(err);
   });
 
-  if (!collection) {
-    throw new Error(`Can't create collection: ${JSON.stringify(draft)}`);
-  }
+  if (!collection) throw new Error(`Can't create collection: ${JSON.stringify(draft)}`);
 
   return snapshot(collection);
 }
@@ -32,21 +33,13 @@ export async function update({
   entity: collection,
   diff,
 }: EntityUpdate<Collection, Omit<CollectionDraft, 'createdBy'>>): Promise<Collection> {
-  const draft = await Collection.findOne(collection);
+  const draft = await Collection.findOne({ id: collection.id });
 
-  if (!draft) {
-    throw new Error(`Can't find collection "${JSON.stringify(collection)}"`);
-  }
-
+  if (!draft) throw new Error(`Can't find collection: ${collection.id}"`);
   // @ts-ignore check for non TS usage
-  if (diff.createdBy) {
-    throw new Error(`Can't update createdBy field`);
-  }
+  if (diff.createdBy) throw new Error(`Can't update createdBy field`);
 
-  Object.keys(diff).forEach(field => {
-    // @ts-ignore
-    draft[field] = diff[field];
-  });
+  Object.assign(draft, diff);
 
   await draft.save().catch(err => {
     throw new Error(err);
@@ -55,14 +48,67 @@ export async function update({
   return snapshot(draft);
 }
 
-export async function share({ collection, user }: { collection: Collection; user: User }): Promise<Collection> {
-  const draft = await Collection.findOne(collection);
+export type CollectionChildren = User | Note | Attraction;
+export interface AddToCollectionProps<E> {
+  collection: Collection;
+  entity: E;
+}
 
-  if (!draft) {
-    throw new Error(`Can't find collection "${JSON.stringify(collection)}"`);
+function linkUniq<T extends { id: string; _id: CollectionChildren; kind: string }>(
+  collectionId: string,
+  e: T,
+  arr: CollectionChildren[],
+) {
+  if (!arr.filter(u => u.id === e.id)[0]) {
+    arr.push(e._id);
+  } else throw new Error(`${e.kind}: ${e.id} already exists in collection: ${collectionId}`);
+}
+
+enum kindToField {
+  user = 'users',
+  note = 'notes',
+  attraction = 'attractions',
+}
+
+export async function link<E extends CollectionChildren>({
+  collection,
+  entity,
+}: AddToCollectionProps<E>): Promise<Collection> {
+  const draft = await snapshot(collection);
+
+  if (!draft) throw new Error(`Can't find collection: ${collection.id}"`);
+
+  if (kindToField[entity.kind]) {
+    linkUniq(collection.id, entity, draft[kindToField[entity.kind]]);
   }
 
-  draft.sharedWith.push(user._id);
+  await draft.save().catch(err => {
+    throw new Error(err);
+  });
+
+  return snapshot(draft);
+}
+
+function unlinkUniq<T extends { id: string; kind: string }>(collectionId: string, e: T, arr: CollectionChildren[]) {
+  if (!arr.filter(u => u.id === e.id)[0])
+    throw new Error(`${e.kind}: ${e.id} doesn't exist in collection: ${collectionId}`);
+
+  return arr.filter(u => u.id !== e.id);
+}
+
+export async function unlink<E extends CollectionChildren>({
+  collection,
+  entity,
+}: AddToCollectionProps<E>): Promise<Collection> {
+  const draft = await snapshot(collection);
+
+  if (!draft) throw new Error(`Can't find collection: ${collection.id}"`);
+
+  const field = kindToField[entity.kind];
+  if (field) {
+    // @ts-ignore enum kindToField is the garant
+    draft[field] = unlinkUniq(collection.id, entity, draft[field]);
+  }
 
   await draft.save().catch(err => {
     throw new Error(err);
@@ -77,16 +123,13 @@ export async function remove(draft: CollectionDraft) {
   });
 }
 
-export function dangerouslyDropAllRecords() {
-  return Collection.deleteMany({});
-}
-
 export const collectionPublicApi = {
-  create: true,
-  snapshot: true,
-  update: true,
-  remove: true,
-  share: true,
+  create,
+  snapshot,
+  update,
+  remove,
+  link,
+  unlink,
 };
 export type CollectionPublicApi = typeof collectionPublicApi;
 export type AllowedCollectionPublicCalls = Array<keyof CollectionPublicApi>;

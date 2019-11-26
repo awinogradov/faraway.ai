@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { LocationDraft } from './Location.model';
+import { LocationDraft, Location } from './Location.model';
 
 export const locationDraftCreator = (): Readonly<LocationDraft> =>
   Object.freeze({
@@ -10,3 +10,7 @@ export const locationDraftCreator = (): Readonly<LocationDraft> =>
     lat: Number(faker.address.latitude()),
     lng: Number(faker.address.longitude()),
   });
+
+export function dangerouslyDropAllRecords() {
+  return Location.deleteMany({});
+}

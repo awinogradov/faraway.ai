@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 import { CollectionDocument } from '../Collection/Collection.model';
 
 export interface UserDocument extends Document {
+  kind: 'user';
   id: string;
   email: string;
   oauth: string;
@@ -16,6 +17,7 @@ type DraftColumns = 'email' | 'oauth';
 export type UserDraft = Pick<UserDocument, DraftColumns>;
 
 const UserSchema = new Schema<UserDocument>({
+  kind: { type: String, default: () => 'user' },
   id: { type: String, default: v4, unique: true },
   email: { type: String, required: true, unique: true },
   oauth: { type: String, required: true, unique: true },

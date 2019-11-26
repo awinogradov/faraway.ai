@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import faker from 'faker';
 
-import { AttractionDraft } from './Attraction.model';
+import { AttractionDraft, Attraction } from './Attraction.model';
 
 interface NonGeneratedColumns {
   createdBy: AttractionDraft['createdBy'];
@@ -14,3 +14,7 @@ export const attractionDraftCreator = ({ createdBy, location }: NonGeneratedColu
     createdBy: createdBy._id,
     location: location._id,
   });
+
+export function dangerouslyDropAllRecords() {
+  return Attraction.deleteMany({});
+}

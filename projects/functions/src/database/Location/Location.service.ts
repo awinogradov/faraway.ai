@@ -16,9 +16,7 @@ export async function create(draft: LocationDraft): Promise<Location> {
     throw new Error(err);
   });
 
-  if (!location) {
-    throw new Error(`Can't create location: ${JSON.stringify(draft)}`);
-  }
+  if (!location) throw new Error(`Can't create location: ${JSON.stringify(draft)}`);
 
   return snapshot(location);
 }
@@ -50,14 +48,10 @@ export async function remove(draft: LocationDraft) {
   });
 }
 
-export function dangerouslyDropAllRecords() {
-  return Location.deleteMany({});
-}
-
 export const locationPublicApi = {
-  create: true,
-  snapshot: true,
-  findOnGoogleMaps: true,
+  create,
+  snapshot,
+  findOnGoogleMaps,
 };
 export type LocationPublicApi = typeof locationPublicApi;
 export type AllowedLocationPublicCalls = Array<keyof LocationPublicApi>;

@@ -66,11 +66,4 @@ describe(`database: ${Note.name}`, () => {
 
     expect(found).to.be.eq(null);
   });
-
-  it('snapshot', async () => {
-    const note = await noteService.create(noteDraftCreator({ createdBy: testUser }));
-    const snap = await noteService.snapshot(note);
-
-    expect(snap.content).to.be.eq(note.content);
-  });
 });
