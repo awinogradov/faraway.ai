@@ -12,7 +12,7 @@ import { locationDraftCreator } from '../Location/Location.seed';
 
 import { Attraction } from './Attraction.model';
 import * as attractionService from './Attraction.service';
-import { attractionDraftCreator } from './Attraction.seed';
+import { attractionDraftCreator, dangerouslyDropAllRecords } from './Attraction.seed';
 
 describe(`database: ${Attraction.name}`, () => {
   let testUser: User;
@@ -26,7 +26,7 @@ describe(`database: ${Attraction.name}`, () => {
   });
 
   afterEach(async () => {
-    await attractionService.dangerouslyDropAllRecords();
+    await dangerouslyDropAllRecords();
   });
 
   it('create', async () => {

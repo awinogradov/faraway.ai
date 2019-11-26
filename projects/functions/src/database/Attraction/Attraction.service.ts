@@ -19,9 +19,7 @@ export async function create(draft: AttractionDraft): Promise<Attraction> {
     throw new Error(err);
   });
 
-  if (!attraction) {
-    throw new Error(`Can't create attraction: ${JSON.stringify(draft)}`);
-  }
+  if (!attraction) throw new Error(`Can't create attraction: ${JSON.stringify(draft)}`);
 
   return snapshot(attraction);
 }
@@ -32,19 +30,11 @@ export async function update({
 }: EntityUpdate<Attraction, Omit<AttractionDraft, 'createdBy'>>): Promise<Attraction> {
   const draft = await Attraction.findOne(attraction);
 
-  if (!draft) {
-    throw new Error(`Can't find attraction "${JSON.stringify(attraction)}"`);
-  }
-
+  if (!draft) throw new Error(`Can't find attraction: ${attraction.id}`);
   // @ts-ignore check for non TS usage
-  if (diff.createdBy) {
-    throw new Error(`Can't update createdBy field`);
-  }
+  if (diff.createdBy) throw new Error(`Can't update createdBy field`);
 
-  Object.keys(diff).forEach(field => {
-    // @ts-ignore
-    draft[field] = diff[field];
-  });
+  Object.assign(draft, diff);
 
   await draft.save().catch(err => {
     throw new Error(err);
@@ -59,15 +49,11 @@ export async function remove(draft: AttractionDraft) {
   });
 }
 
-export function dangerouslyDropAllRecords() {
-  return Attraction.deleteMany({});
-}
-
 export const attractionPublicApi = {
-  create: true,
-  snapshot: true,
-  update: true,
-  remove: true,
+  create,
+  snapshot,
+  update,
+  remove,
 };
 export type AttractionPublicApi = typeof attractionPublicApi;
 export type AllowedAttractionPublicCalls = Array<keyof AttractionPublicApi>;

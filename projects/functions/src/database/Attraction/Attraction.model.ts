@@ -7,6 +7,7 @@ import { LocationDocument } from '../Location/Location.model';
 import { CollectionDocument } from '../Collection/Collection.model';
 
 export interface AttractionDocument extends Document {
+  kind: 'attraction';
   id: string;
   title: string;
   created: number;
@@ -19,6 +20,7 @@ type DraftColumns = 'title' | 'createdBy' | 'location';
 export type AttractionDraft = Pick<AttractionDocument, DraftColumns>;
 
 const AttractionSchema = new Schema<AttractionDocument>({
+  kind: { type: String, default: () => 'attraction' },
   id: { type: String, default: v4, unique: true },
   title: { type: String, required: true },
   created: { type: Number, default: Date.now },

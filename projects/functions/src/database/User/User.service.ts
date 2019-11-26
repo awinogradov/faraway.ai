@@ -17,9 +17,7 @@ export async function create(draft: UserDraft): Promise<User> {
     throw new Error(err);
   });
 
-  if (!user) {
-    throw new Error(`Can't create user: ${JSON.stringify(draft)}`);
-  }
+  if (!user) throw new Error(`Can't create user: ${JSON.stringify(draft)}`);
 
   return snapshot(user);
 }
@@ -27,14 +25,9 @@ export async function create(draft: UserDraft): Promise<User> {
 export async function update({ entity: user, diff }: EntityUpdate<User, UserDraft>): Promise<User> {
   const draft = await User.findOne(user);
 
-  if (!draft) {
-    throw new Error(`Can't find user "${JSON.stringify(user)}"`);
-  }
+  if (!draft) throw new Error(`Can't find user: ${user.id}"`);
 
-  Object.keys(diff).forEach(field => {
-    // @ts-ignore
-    draft[field] = diff[field];
-  });
+  Object.assign(draft, diff);
 
   await draft.save().catch(err => {
     throw new Error(err);
@@ -49,15 +42,11 @@ export async function remove(draft: UserDraft) {
   });
 }
 
-export function dangerouslyDropAllRecords() {
-  return User.deleteMany({});
-}
-
 export const userPublicApi = {
-  create: true,
-  snapshot: true,
-  update: true,
-  remove: true,
+  create,
+  snapshot,
+  update,
+  remove,
 };
 export type UserPublicApi = typeof userPublicApi;
 export type AllowedUserPublicCalls = Array<keyof UserPublicApi>;

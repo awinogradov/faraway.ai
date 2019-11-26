@@ -5,14 +5,14 @@ import faker from 'faker';
 
 import { User } from './User.model';
 import * as userService from './User.service';
-import { userDraftCreator } from './User.seed';
+import { userDraftCreator, dangerouslyDropAllRecords } from './User.seed';
 
 const testUser = userDraftCreator();
 const brotherOfTestUser = userDraftCreator();
 
 describe(`database: ${User.name}`, () => {
   afterEach(async () => {
-    await userService.dangerouslyDropAllRecords();
+    await dangerouslyDropAllRecords();
   });
 
   it('create', async () => {
