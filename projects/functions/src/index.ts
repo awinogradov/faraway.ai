@@ -23,4 +23,4 @@ export const parse = {
   }),
 };
 
-export * from './database';
+export * from './providers/database';

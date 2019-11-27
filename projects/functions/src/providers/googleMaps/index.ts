@@ -1,6 +1,6 @@
 import { createClient } from '@google/maps';
 
-import { config } from '../configs';
+import { config } from '../../configs';
 
 let googleMapsClient: ReturnType<typeof createClient>;
 
