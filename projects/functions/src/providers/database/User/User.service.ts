@@ -1,4 +1,4 @@
-import { EntityUpdate } from '../../typings';
+import { EntityUpdate } from '../../../typings';
 
 import { User, UserDraft } from './User.model';
 

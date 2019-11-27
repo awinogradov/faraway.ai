@@ -1,4 +1,4 @@
-import { EntityUpdate } from '../../typings';
+import { EntityUpdate } from '../../../typings';
 
 import { Attraction, AttractionDraft } from './Attraction.model';
 

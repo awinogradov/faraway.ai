@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { EntityUpdate } from '../../typings';
+import { EntityUpdate } from '../../../typings';
 import { User } from '../User/User.model';
 import { Note } from '../Note/Note.model';
 import { Attraction } from '../Attraction/Attraction.model';
