@@ -10,8 +10,3 @@
 
 MongoDB admin:
 > mongo -u <username> -p --authenticationDatabase admin --host <host>
-
-Runtime config:
-> firebase functions:config:get
-
-Read [docs](https://firebase.google.com/docs/functions/config-env).
