@@ -1,10 +1,23 @@
-export interface ApplicationConfig {
-  dbUsername: string;
-  dbPassword: string;
-  dbName: string;
-  dbHost: string;
-  dbUrl: string;
-  googleMapsKey: string;
+export interface DbConfig {
+  user: string;
+  password: string;
+  name: string;
+  host: string;
+}
+
+export interface DbConnectionConfig extends DbConfig {
+  url: string;
+}
+
+export interface EnvConfig {
+  db: DbConfig;
+  googleMaps: {
+    key: string;
+  };
+}
+
+export interface ApplicationConfig extends EnvConfig {
+  db: DbConnectionConfig;
 }
 
 export interface EntityUpdate<Original, Diff> {

@@ -8,7 +8,7 @@ export const connect = async () => {
   connection =
     connection ||
     (await mongoose
-      .connect(config.dbUrl, {
+      .connect(config.db.url, {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
