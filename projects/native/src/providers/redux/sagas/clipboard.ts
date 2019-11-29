@@ -1,16 +1,19 @@
-/* eslint-disable compat/compat */
 import { put, takeEvery, call } from 'redux-saga/effects';
 import { Clipboard } from 'react-native';
 import isUrl from 'validator/lib/isURL';
 import { firebase } from '@react-native-firebase/functions';
+import { InstagramParseProps } from 'faraway.ai-functions';
 
 import { appActionTypes } from '../actions/app';
 import { clipboardRead, clipboardWrite } from '../actions/clipboard';
 import { visibilityChange } from '../actions/add';
 
 async function callCloudFunctionParse(url: string) {
+  const remoteFunctionProps: InstagramParseProps = {
+    post: url,
+  };
   try {
-    return await firebase.functions().httpsCallable('parse')({ url });
+    return await firebase.functions().httpsCallable('parse-instagram')(remoteFunctionProps);
   } catch (e) {
     console.error(e);
   }

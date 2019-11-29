@@ -29,7 +29,12 @@ export interface GoogleMapRes {
   ref: string;
 }
 
-export async function findOnGoogleMaps(search: { address: string; region?: string }): Promise<GoogleMapRes> {
+export interface GoogleMapsProps {
+  address: string;
+  region?: string;
+}
+
+export async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> {
   const gmc = googleMaps();
   const googleMapsLocationGeocode = await gmc.geocode(search).asPromise();
   const googleMapsLocationGeocodeInfo = googleMapsLocationGeocode.json.results[0];

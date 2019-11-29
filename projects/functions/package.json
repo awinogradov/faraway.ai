@@ -1,5 +1,6 @@
 {
   "name": "faraway.ai-functions",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "tsc",
