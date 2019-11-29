@@ -1,7 +1,7 @@
 import { https } from 'firebase-functions';
 
-import { scrapInstagram } from './providers/instagram';
-import { findOnGoogleMaps } from './providers/googleMaps';
+import { scrapInstagram, InstagramProps, InstagramPostProps } from './providers/instagram';
+import { findOnGoogleMaps, GoogleMapsProps } from './providers/googleMaps';
 
 // https://firebase.google.com/docs/functions/typescript
 
@@ -13,3 +13,6 @@ export const parse = {
 };
 
 export * from './providers/database';
+export type InstagramParseProps = InstagramProps;
+export type GoogleMapsParseProps = GoogleMapsProps;
+export type InstagramParsedPostProps = InstagramPostProps;

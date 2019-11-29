@@ -101,6 +101,8 @@ function post({ html }: ScrapProps) {
   };
 }
 
+export type InstagramPostProps = ReturnType<typeof post>;
+
 // interface InstagramLocationEdgeData {
 //   node: {
 //     display_url: string;
