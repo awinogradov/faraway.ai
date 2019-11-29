@@ -8,7 +8,7 @@ export function googleMaps() {
   googleMapsClient =
     googleMapsClient ||
     createClient({
-      key: config.googleMapsKey,
+      key: config.googleMaps.key,
       Promise,
     });
 

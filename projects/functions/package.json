@@ -18,19 +18,19 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google/maps": "1.0.1",
-    "firebase": "7.4.0",
-    "firebase-admin": "8.0.0",
-    "firebase-functions": "3.1.0",
-    "firebase-tools": "7.7.0",
+    "firebase": "7.5.0",
+    "firebase-admin": "8.8.0",
+    "firebase-functions": "3.3.0",
+    "firebase-tools": "7.8.1",
     "got": "9.6.0",
-    "mongoose": "5.7.12",
+    "mongoose": "5.7.13",
     "uuid": "3.3.3"
   },
   "devDependencies": {
     "@types/chai": "4.2.5",
-    "@types/faker": "4.1.7",
+    "@types/faker": "4.1.8",
     "@types/google__maps": "0.5.8",
-    "@types/got": "9.6.7",
+    "@types/got": "9.6.9",
     "@types/mocha": "5.2.7",
     "@types/mongoose": "5.5.32",
     "@types/node": "12.12.11",
@@ -40,7 +40,7 @@
     "mocha": "6.2.2",
     "mongodb-memory-server": "6.0.1",
     "source-map-support": "0.5.16",
-    "ts-node": "8.5.2",
-    "typescript": "3.6.3"
+    "ts-node": "8.5.4",
+    "typescript": "3.7.2"
   }
 }
