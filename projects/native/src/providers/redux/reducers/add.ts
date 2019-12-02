@@ -21,6 +21,9 @@ export default function appReducer(state: GlobalState['add'] = initialState, act
         draft.kind = undefined;
         draft.data = undefined;
         break;
+      case addActionTypes.LOAD_POINT_DESCRIPTION_SUCCESS:
+        draft.desciption = action.payload;
+        break;
       default:
         break;
     }
