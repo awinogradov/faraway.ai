@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Button } from 'react-native';
-import { InstagramParsedPostProps } from 'faraway.ai-functions';
+import { InstagramScrapedPost } from 'faraway.ai-functions';
 
 import { Swing } from '../components/Swing';
 import { InstagramPreview } from '../components/InstagramPreview';
@@ -11,13 +11,12 @@ import { visibilityChange, addPoint } from '../providers/redux/actions/add';
 
 const mapStateToProps = (state: GlobalState) => ({
   visible: state.add.visible,
-  data: state.add.data as InstagramParsedPostProps,
+  data: state.add.data as InstagramScrapedPost,
 });
 const mapDispatchProps = (dispatch: Dispatch) => bindActionCreators({ visibilityChange, addPoint }, dispatch);
 
 export type AddScreenProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchProps>;
 
-// eslint-disable-next-line no-shadow
 const Add: React.FC<AddScreenProps> = props => {
   return props.visible ? (
     <Swing visible={props.visible} onClose={() => props.visibilityChange({ visible: false })}>
