@@ -1,6 +1,7 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
 import { RouterState } from 'connected-react-router';
+import { GoogleMapRes, InstagramScrapedPost } from 'faraway.ai-functions';
 
 export interface GlobalState {
   user: {
@@ -13,7 +14,8 @@ export interface GlobalState {
   add: {
     visible: boolean;
     kind?: 'clipboard';
-    data?: object;
+    data?: InstagramScrapedPost;
+    desciption?: GoogleMapRes;
   };
   app: {
     state: AppStateStatus;

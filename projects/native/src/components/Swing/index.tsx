@@ -175,8 +175,11 @@ export class Swing extends React.Component<SwingProps, SwingState> {
   }
 
   render() {
-    // eslint-disable-next-line compat/compat
     const style = Object.assign({}, this.state.style, this.props.style);
+
+    if (this.state.opened && this.props.onOpen) {
+      this.props.onOpen();
+    }
 
     return this.props.visible ? (
       <StyledSwingInner {...this.panResponder.panHandlers} style={style}>

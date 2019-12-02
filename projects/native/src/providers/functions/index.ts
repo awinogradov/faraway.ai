@@ -17,3 +17,4 @@ function provideFunction<P, R>(name: string): FunctionCall<P, R> {
 }
 
 export const scrapInstagram = provideFunction<InstagramProps, InstagramScrapedPost>('scrapInstagram');
+export const googleMapsSearch = provideFunction<InstagramProps, InstagramScrapedPost>('googleMapsSearch');
