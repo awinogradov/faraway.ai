@@ -1,19 +1,7 @@
+import { https } from 'firebase-functions';
 import { createClient, PlaceReview } from '@google/maps';
 
 import { config } from '../../configs';
-
-let googleMapsClient: ReturnType<typeof createClient>;
-
-export function googleMaps() {
-  googleMapsClient =
-    googleMapsClient ||
-    createClient({
-      key: config.googleMaps.key,
-      Promise,
-    });
-
-  return googleMapsClient;
-}
 
 export interface GoogleMapRes {
   id: string;
@@ -34,7 +22,20 @@ export interface GoogleMapsProps {
   region?: string;
 }
 
-export async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> {
+let googleMapsClient: ReturnType<typeof createClient>;
+
+export function googleMaps() {
+  googleMapsClient =
+    googleMapsClient ||
+    createClient({
+      key: config.googleMaps.key,
+      Promise,
+    });
+
+  return googleMapsClient;
+}
+
+async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> {
   const gmc = googleMaps();
   const googleMapsLocationGeocode = await gmc.geocode(search).asPromise();
   const googleMapsLocationGeocodeInfo = googleMapsLocationGeocode.json.results[0];
@@ -55,3 +56,5 @@ export async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleM
     ref: googleMapsLocationInfo.url,
   };
 }
+
+export const googleMapsSearch = https.onCall(findOnGoogleMaps);

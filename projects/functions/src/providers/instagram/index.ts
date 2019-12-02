@@ -1,47 +1,13 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-use-before-define */
+import { https } from 'firebase-functions';
 import got from 'got';
 
-const dataRegExp = /window\._sharedData\s?=\s?({.+);<\/script>/;
-
-export interface InstagramProps {
-  post?: string;
-}
+export type InstagramProps = Record<keyof typeof mapPropsToScrappers, string>;
 
 interface ScrapProps {
   html: string;
   url: string;
-}
-
-const mapPropsToScrappers = {
-  post,
-};
-
-export async function scrapInstagram(props: InstagramProps) {
-  const scrapKind = Object.keys(props)[0] as keyof InstagramProps;
-  const url = props[scrapKind];
-
-  if (!url) {
-    throw new Error('Unsupported instagram data kind for scrapping.');
-  }
-
-  const { body: html } = await got(url);
-
-  return mapPropsToScrappers[scrapKind]({ html, url });
-}
-
-function parseJsonData<T>(html: string) {
-  let data: T;
-
-  try {
-    const matched = html.match(dataRegExp);
-    const dataString = matched![1];
-    data = JSON.parse(dataString);
-  } catch (e) {
-    throw new Error('The HTML returned from instagram was not suitable for scraping');
-  }
-
-  return data;
 }
 
 export interface InstagramPostData {
@@ -74,7 +40,60 @@ export interface InstagramPostData {
   };
 }
 
-function post({ html }: ScrapProps) {
+export interface InstagramScrapedPost {
+  ref: string;
+  src: string;
+  isVideo: boolean;
+  owner: {
+    ref: string;
+    username: string;
+    fullName: string;
+    avatar: string;
+    private: boolean;
+    verified: boolean;
+  };
+  location?: {
+    id: string;
+    name: string;
+    region: string;
+    ref: string;
+  };
+}
+
+const mapPropsToScrappers = {
+  post,
+};
+
+const dataRegExp = /window\._sharedData\s?=\s?({.+);<\/script>/;
+
+async function resolveInstagramContent(props: InstagramProps) {
+  const scrapKind = Object.keys(props)[0] as keyof InstagramProps;
+  const url = props[scrapKind];
+
+  if (!url) {
+    throw new Error('Unsupported instagram data kind for scrapping.');
+  }
+
+  const { body: html } = await got(url);
+
+  return mapPropsToScrappers[scrapKind]({ html, url });
+}
+
+function parseJsonData<T>(html: string) {
+  let data: T;
+
+  try {
+    const matched = html.match(dataRegExp);
+    const dataString = matched![1];
+    data = JSON.parse(dataString);
+  } catch (e) {
+    throw new Error('The HTML returned from instagram was not suitable for scraping');
+  }
+
+  return data;
+}
+
+function post({ html }: ScrapProps): InstagramScrapedPost {
   const data = parseJsonData<InstagramPostData>(html);
   const { shortcode_media } = data.entry_data.PostPage[0].graphql;
 
@@ -101,4 +120,4 @@ function post({ html }: ScrapProps) {
   };
 }
 
-export type InstagramPostProps = ReturnType<typeof post>;
+export const scrapInstagram = https.onCall(resolveInstagramContent);
