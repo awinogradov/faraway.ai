@@ -2,14 +2,10 @@ import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { Link } from 'react-router-native';
 import styled, { css } from 'styled-components/native';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
 import { GlobalState } from '../../providers/redux/store';
-import { AllowedRoutes } from '../Router';
-
-const mapStateToProps = (state: GlobalState) => ({ pathname: state.router.location.pathname });
-const mapDispatchProps = (dispatch: Dispatch) => bindActionCreators({}, dispatch);
+import { AllowedRoutes } from '../Routes';
 
 const StyledConteinter = styled(View)`
   position: absolute;
@@ -68,39 +64,33 @@ const BarLink: React.FC<BarLinkProps> = props => {
   );
 };
 
-export type BarProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchProps>;
-
-const Bar: React.FC<BarProps> = props => {
-  const isActive = (route: AllowedRoutes) => route === props.pathname;
+export const Bar: React.FC = () => {
+  const pathname = useSelector((state: GlobalState) => state.router.location.pathname);
+  const isActive = (route: AllowedRoutes) => route === pathname;
 
   return (
     <StyledConteinter>
       <StyledNav>
-        <BarLink to={AllowedRoutes.discover} active={isActive(AllowedRoutes.discover)}>
+        <BarLink to={AllowedRoutes.discovery} active={isActive(AllowedRoutes.discovery)}>
           <Text>D</Text>
         </BarLink>
 
-        <BarLink to={AllowedRoutes.collections} active={isActive(AllowedRoutes.collections)}>
-          <Text>C</Text>
+        <BarLink to={AllowedRoutes.journey} active={isActive(AllowedRoutes.journey)}>
+          <Text>J</Text>
         </BarLink>
 
         <BarLink to={AllowedRoutes.add} active={isActive(AllowedRoutes.add)}>
           <Text>+</Text>
         </BarLink>
 
-        <BarLink to={AllowedRoutes.trip} active={isActive(AllowedRoutes.trip)}>
-          <Text>T</Text>
+        <BarLink to={AllowedRoutes.notificatitons} active={isActive(AllowedRoutes.notificatitons)}>
+          <Text>C</Text>
         </BarLink>
 
-        <BarLink to={AllowedRoutes.user} active={isActive(AllowedRoutes.user)}>
+        <BarLink to={AllowedRoutes.profile} active={isActive(AllowedRoutes.profile)}>
           <Text>U</Text>
         </BarLink>
       </StyledNav>
     </StyledConteinter>
   );
 };
-
-export default connect(
-  mapStateToProps,
-  mapDispatchProps,
-)(Bar);
