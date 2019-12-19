@@ -377,6 +377,8 @@ PODS:
   - RNSentry (1.0.9):
     - React
     - Sentry (~> 4.4.0)
+  - RNSVG (9.13.6):
+    - React
   - Sentry (4.4.1):
     - Sentry/Core (= 4.4.1)
   - Sentry/Core (4.4.1)
@@ -423,6 +425,7 @@ DEPENDENCIES:
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -518,6 +521,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-google-signin"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -571,13 +576,14 @@ SPEC CHECKSUMS:
   React-RCTText: e3ef6191cdb627855ff7fe8fa0c1e14094967fb8
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
-  RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856
+  RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNFBApp: 32c782583cda2a9d53eac0ca154daf9f4e94f0fd
   RNFBAuth: 405e85b784f9e12d5e0ca00fed8349148d83a424
   RNFBDatabase: 8e40f40d6ef644a2eb478e72d64a9ef02a8bce58
   RNFBFunctions: f45d207e05aba8c9a09d2ba4a27e1b680f9dfb39
   RNGoogleSignin: bb1393dec8541d997fd12b7b8f43481868a34e93
   RNSentry: 2803ba8c8129dcf26b79e9b4d8c80168be6e4390
+  RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   Sentry: 5d312a04e369154aeac616214f4dfc3cbcc8b296
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
