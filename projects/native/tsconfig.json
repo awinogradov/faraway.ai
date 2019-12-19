@@ -12,9 +12,6 @@
       "target": "esnext",
       "resolveJsonModule": true
     },
-    "include": [
-      "global.d.ts"
-    ],
     "exclude": [
       "node_modules",
       "babel.config.js",
