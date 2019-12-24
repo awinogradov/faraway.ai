@@ -1,0 +1,7 @@
+export enum appActionTypes {
+  STATE_CHANGE = 'app/STATE_CHANGE',
+  STATE_ACTIVE = 'app/STATE_ACTIVE',
+  NAVIGATE = 'app/NAVIGATE',
+  CLIPBOARD_READ = 'app/CLIPBOARD_READ',
+  CLIPBOARD_WRITE = 'app/CLIPBOARD_WRITE',
+}

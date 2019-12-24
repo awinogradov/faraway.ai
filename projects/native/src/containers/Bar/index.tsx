@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Dimensions, Image } from 'react-native';
-import { Link } from 'react-router-native';
 import styled, { css } from 'styled-components/native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import IconDiscovery from '../../components/Icon/_view/Icon_view_discovery.svg';
 import IconJourney from '../../components/Icon/_view/Icon_view_journey.svg';
 import IconNotifications from '../../components/Icon/_view/Icon_view_notifications.svg';
 import IconAdd from '../../components/Icon/_view/Icon_view_add.svg';
 import { GlobalState } from '../../providers/redux/store';
-import { AllowedRoutes } from '../Routes';
+import { navigate } from '../../providers/redux/actions/app';
+import { allowedScreens } from '../../providers/navigation';
 
 const StyledConteinter = styled(View)`
   position: absolute;
@@ -77,7 +77,7 @@ const Avatar = styled(Image)`
 `;
 
 interface BarLinkProps {
-  to: AllowedRoutes;
+  to?: allowedScreens;
   main?: boolean;
 }
 
@@ -91,22 +91,27 @@ const BarLinkActiveDot = styled(View)`
 `;
 
 const BarLink: React.FC<BarLinkProps> = props => {
-  const pathname = useSelector((state: GlobalState) => state.router.location.pathname);
-  const isActive = props.to === pathname;
+  const currentScreen = useSelector((state: GlobalState) => state.app.currentScreen);
+  const dispatch = useDispatch();
+  const isActive = props.to === currentScreen;
+
+  const navigateHandler = () => {
+    if (props.to) {
+      dispatch(navigate(props.to));
+    }
+  };
 
   return (
-    <Link to={props.to}>
+    <View onTouchStart={navigateHandler}>
       {props.main ? (
         <StyledMainNavLink>{props.children}</StyledMainNavLink>
       ) : (
-        <>
-          <StyledNavLink>
-            {props.children}
-            {isActive && <BarLinkActiveDot />}
-          </StyledNavLink>
-        </>
+        <StyledNavLink>
+          {props.children}
+          {isActive && <BarLinkActiveDot />}
+        </StyledNavLink>
       )}
-    </Link>
+    </View>
   );
 };
 
@@ -122,23 +127,23 @@ export const Bar: React.FC = () => {
   return (
     <StyledConteinter>
       <StyledNav>
-        <BarLink to={AllowedRoutes.discovery}>
+        <BarLink to={allowedScreens.Discovery}>
           <IconDiscovery width={iconSize} height={iconSize} />
         </BarLink>
 
-        <BarLink to={AllowedRoutes.journey}>
+        <BarLink>
           <IconJourney width={iconSize} height={iconSize} />
         </BarLink>
 
-        <BarLink main to={AllowedRoutes.add}>
+        <BarLink main to={allowedScreens.Add}>
           <IconAdd width={mainIconSize} height={mainIconSize} />
         </BarLink>
 
-        <BarLink to={AllowedRoutes.notificatitons}>
+        <BarLink>
           <IconNotifications width={iconSize} height={iconSize} />
         </BarLink>
 
-        <BarLink to={AllowedRoutes.profile}>{avatar}</BarLink>
+        <BarLink to={allowedScreens.Profile}>{avatar}</BarLink>
       </StyledNav>
     </StyledConteinter>
   );

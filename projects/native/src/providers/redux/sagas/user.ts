@@ -2,9 +2,11 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 
-import { userActionTypes, userAuthError, userAuthChangeInProgress, userAuthChangeSuccess } from '../actions/user';
+import { allowedScreens } from '../../navigation';
+import { userActionTypes } from '../constants/user';
+import { userAuthError, userAuthChangeInProgress, userAuthChangeSuccess } from '../actions/user';
+import { navigate } from '../actions/app';
 
 const carriedAuth = auth();
 
@@ -52,15 +54,15 @@ function* fbSignin() {
 function* signout() {
   yield put(userAuthChangeInProgress());
   yield call(carriedAuth.signOut.bind(carriedAuth));
-  yield put(userAuthChangeSuccess(null));
+  yield put(userAuthChangeSuccess());
 }
 
 function* inProgress() {
-  yield put(push('/inprogress'));
+  yield put(navigate(allowedScreens.Progress));
 }
 
-function* success(action) {
-  yield put(push(action.payload ? '/' : '/signin'));
+function* success(action: ReturnType<typeof userAuthChangeSuccess>) {
+  yield put(navigate(action.payload ? allowedScreens.Discovery : allowedScreens.Signin));
 }
 
 export function* userSaga() {

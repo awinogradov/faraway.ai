@@ -41,5 +41,6 @@ target 'farawayai' do
   pod 'Firebase/Database'
   pod 'Firebase/Functions'
 
+
   use_native_modules!
 end
