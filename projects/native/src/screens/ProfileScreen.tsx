@@ -10,11 +10,17 @@ export const ProfileScreen: React.FC = () => {
   const user = useSelector((state: GlobalState) => state.user);
   const dispatch = useDispatch();
 
-  return (
-    <MainScreenView>
-      <Text>Welcome {user.auth.email}</Text>
+  let profile: React.ReactNode = null;
 
-      <Button onPress={() => dispatch(userSignout())} title="Logout" />
-    </MainScreenView>
-  );
+  if (user.auth) {
+    profile = (
+      <>
+        <Text>Welcome {user.auth.email}</Text>
+
+        <Button onPress={() => dispatch(userSignout())} title="Logout" />
+      </>
+    );
+  }
+
+  return <MainScreenView>{profile}</MainScreenView>;
 };

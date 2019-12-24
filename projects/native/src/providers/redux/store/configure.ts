@@ -1,19 +1,15 @@
+/* eslint-disable no-undef */
 import { createStore, applyMiddleware, compose, Middleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { routerMiddleware } from 'connected-react-router';
-import { createMemoryHistory } from 'history';
 
 import createRootReducer from '../reducers';
 
-import { GlobalState } from './types';
-
 export const saga = createSagaMiddleware();
 
-export const configureStore = (preloadedState: GlobalState) => {
-  const history = createMemoryHistory();
-  const rootReducer = createRootReducer(history);
-  const middlewares: Middleware[] = [routerMiddleware(history), saga];
+export const configureStore = () => {
+  const rootReducer = createRootReducer();
+  const middlewares: Middleware[] = [saga];
 
   const composeEnhancers =
     // @ts-ignore
@@ -26,10 +22,9 @@ export const configureStore = (preloadedState: GlobalState) => {
     middlewares.push(createLogger());
   }
 
-  const store = createStore(rootReducer, preloadedState, composeEnhancers(applyMiddleware(...middlewares)));
+  const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middlewares)));
 
   return {
     store,
-    history,
   };
 };

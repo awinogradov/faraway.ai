@@ -1,18 +1,15 @@
 import { AppStateStatus } from 'react-native';
 
-export enum appActionTypes {
-  STATE_CHANGE = 'app/STATE_CHANGE',
-  STATE_ACTIVE = 'app/STATE_ACTIVE',
-}
+import { appActionTypes } from '../constants/app';
+import { createAction, createEmptyAction } from '../../../utils/actionCreator';
+import { allowedScreens } from '../../navigation';
 
-export const stateChange = (appState: AppStateStatus) => ({
-  type: appActionTypes.STATE_CHANGE,
-  payload: appState,
-});
+export const stateChange = (state: AppStateStatus) => createAction(appActionTypes.STATE_CHANGE, state);
+export const stateActive = () => createEmptyAction(appActionTypes.STATE_ACTIVE);
 
-export const stateActive = () => ({
-  type: appActionTypes.STATE_ACTIVE,
-  payload: undefined,
-});
+export const navigate = (currentScreen: allowedScreens) => createAction(appActionTypes.NAVIGATE, currentScreen);
 
-export type AppActions = ReturnType<typeof stateChange | typeof stateActive>;
+export const clipboardRead = (clipboardContent: string) =>
+  createAction(appActionTypes.CLIPBOARD_READ, clipboardContent);
+export const clipboardWrite = (clipboardContent: string) =>
+  createAction(appActionTypes.CLIPBOARD_WRITE, clipboardContent);

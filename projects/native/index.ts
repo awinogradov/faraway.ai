@@ -1,6 +1,7 @@
-import { AppRegistry } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 import './src/providers/redux/subscriptions/appState';
-import { App } from './src/screens';
+import { registerScreens, pushInitializeScreen } from './src/providers/navigation';
 
-AppRegistry.registerComponent('farawayai', () => App);
+registerScreens();
+Navigation.events().registerAppLaunchedListener(() => pushInitializeScreen());

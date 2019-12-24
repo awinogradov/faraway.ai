@@ -1,11 +1,12 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
-import { RouterState } from 'connected-react-router';
 import { GoogleMapRes, InstagramScrapedPost } from 'faraway.ai-functions';
+
+import { allowedScreens } from '../../navigation';
 
 export interface GlobalState {
   user: {
-    auth: FirebaseAuthTypes.User | null;
+    auth?: FirebaseAuthTypes.User;
     error?: Error;
   };
   clipboard: {
@@ -18,7 +19,8 @@ export interface GlobalState {
     desciption?: GoogleMapRes;
   };
   app: {
-    state: AppStateStatus;
+    state?: AppStateStatus;
+    currentScreen: allowedScreens;
+    clipboard?: string;
   };
-  router: RouterState;
 }
