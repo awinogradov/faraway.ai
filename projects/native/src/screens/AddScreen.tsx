@@ -1,10 +1,26 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { Swing } from '../components/Swing';
+import { Menu, MenuProps } from '../components/Menu';
+import { allowedScreens } from '../providers/navigation';
+import { navigate } from '../providers/redux/actions/app';
 
 export const AddScreen: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const provideOnPress = (destination: allowedScreens) => () => dispatch(navigate(destination));
+
+  const mainMenu: MenuProps['items'] = [
+    { title: 'Collection', onPress: provideOnPress(allowedScreens.CreateCollection) },
+    { title: 'Point', onPress: provideOnPress(allowedScreens.Discovery) },
+  ];
+
+  const onClose = () => {};
+
   return (
-    <View>
-      <Text>Add</Text>
-    </View>
+    <Swing visible>
+      <Menu items={mainMenu} onClose={onClose} />
+    </Swing>
   );
 };

@@ -1,7 +1,8 @@
-import { Navigation } from 'react-native-navigation';
+import 'react-native-gesture-handler';
+import { AppRegistry } from 'react-native';
 
 import './src/providers/redux/subscriptions/appState';
-import { registerScreens, pushInitializeScreen } from './src/providers/navigation';
 
-registerScreens();
-Navigation.events().registerAppLaunchedListener(() => pushInitializeScreen());
+import App from './App';
+
+AppRegistry.registerComponent('farawayai', () => App);
