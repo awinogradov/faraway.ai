@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Dimensions, Image } from 'react-native';
 import styled, { css } from 'styled-components/native';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavigationContext } from 'react-navigation';
 
 import IconDiscovery from '../../components/Icon/_view/Icon_view_discovery.svg';
 import IconJourney from '../../components/Icon/_view/Icon_view_journey.svg';
@@ -91,12 +92,12 @@ const BarLinkActiveDot = styled(View)`
 `;
 
 const BarLink: React.FC<BarLinkProps> = props => {
-  const currentScreen = useSelector((state: GlobalState) => state.app.currentScreen);
+  const navigation = useContext(NavigationContext);
   const dispatch = useDispatch();
-  const isActive = props.to === currentScreen;
+  const isActive = props.to === navigation.state.routes[navigation.state.index].routeName;
 
   const navigateHandler = () => {
-    if (props.to) {
+    if (props.to && !isActive) {
       dispatch(navigate(props.to));
     }
   };
@@ -139,7 +140,7 @@ export const Bar: React.FC = () => {
           <IconAdd width={mainIconSize} height={mainIconSize} />
         </BarLink>
 
-        <BarLink>
+        <BarLink to={allowedScreens.Notifications}>
           <IconNotifications width={iconSize} height={iconSize} />
         </BarLink>
 

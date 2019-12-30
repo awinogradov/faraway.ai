@@ -3,13 +3,13 @@ import { Clipboard } from 'react-native';
 import isUrl from 'validator/lib/isURL';
 
 // import { scrapInstagram, googleMapsSearch } from '../../functions';
-import { navigationFunctions, allowedScreens } from '../../navigation';
+import { navigate as nativeNavigate } from '../../navigation';
 import { appActionTypes } from '../constants/app';
-import { navigate, clipboardRead, clipboardWrite } from '../actions/app';
+import { clipboardRead, clipboardWrite, navigate } from '../actions/app';
 // import { visibilityChange, addActionTypes, loadPointDescriptionSuccess } from '../actions/add';
 
 function* callNativeNavigation(action: ReturnType<typeof navigate>) {
-  yield call(navigationFunctions[action.payload]);
+  yield call(nativeNavigate, action.payload);
 }
 
 function* resolveClipboardContent() {
@@ -21,7 +21,7 @@ function* resolveClipboardContent() {
     // const post = yield call(scrapInstagram, { post: clipboardContent });
 
     yield put(clipboardWrite(clipboardContent));
-    yield put(navigate(allowedScreens.Add));
+    // yield put(navigate(allowedScreens.Add));
     // yield put(
     //   visibilityChange({
     //     visible: true,

@@ -62,7 +62,7 @@ function* inProgress() {
 }
 
 function* success(action: ReturnType<typeof userAuthChangeSuccess>) {
-  yield put(navigate(action.payload ? allowedScreens.Discovery : allowedScreens.Signin));
+  yield put(navigate(action.payload ? allowedScreens.App : allowedScreens.Auth));
 }
 
 export function* userSaga() {

@@ -12,7 +12,6 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RNGoogleSignin/RNGoogleSignin.h>
-#import <ReactNativeNavigation/ReactNativeNavigation.h>
 
 @import Firebase;
 
@@ -34,8 +33,6 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-
-  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
   [FIRApp configure];
 
