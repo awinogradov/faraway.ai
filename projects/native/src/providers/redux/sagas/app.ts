@@ -3,13 +3,31 @@ import { Clipboard } from 'react-native';
 import isUrl from 'validator/lib/isURL';
 
 // import { scrapInstagram, googleMapsSearch } from '../../functions';
-import { navigate as nativeNavigate } from '../../navigation';
+import { appNavigate, showNativeBottomSheet, closeNativeBottomSheet } from '../../navigation';
 import { appActionTypes } from '../constants/app';
-import { clipboardRead, clipboardWrite, navigate } from '../actions/app';
-// import { visibilityChange, addActionTypes, loadPointDescriptionSuccess } from '../actions/add';
+import {
+  clipboardRead,
+  clipboardWrite,
+  navigate,
+  showBottomSheet,
+  setBottomSheetComponent,
+  closeTabs,
+  showTabs,
+} from '../actions/app';
 
 function* callNativeNavigation(action: ReturnType<typeof navigate>) {
-  yield call(nativeNavigate, action.payload);
+  yield call(appNavigate, action.payload);
+}
+
+function* callShowNativeBottomSheet(action: ReturnType<typeof showBottomSheet>) {
+  yield put(closeTabs());
+  yield put(setBottomSheetComponent(action.payload.component));
+  yield call(showNativeBottomSheet, action.payload.snapTo);
+}
+
+function* callCloseNativeBottomSheet() {
+  yield put(showTabs());
+  yield call(closeNativeBottomSheet);
 }
 
 function* resolveClipboardContent() {
@@ -35,6 +53,8 @@ function* resolveClipboardContent() {
 export function* appSaga() {
   yield takeEvery(appActionTypes.NAVIGATE, callNativeNavigation);
   yield takeEvery(appActionTypes.STATE_ACTIVE, resolveClipboardContent);
+  yield takeEvery(appActionTypes.SHOW_BOTTOM_SHEET, callShowNativeBottomSheet);
+  yield takeEvery(appActionTypes.CLOSE_BOTTOM_SHEET, callCloseNativeBottomSheet);
   // yield takeEvery(addActionTypes.LOAD_POINT_DESCRIPTION, loadPointDescription);
 }
 

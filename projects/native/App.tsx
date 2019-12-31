@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -13,8 +12,11 @@ import { DiscoveryScreen } from './src/screens/DiscoveryScreen';
 import { NotificationsScreen } from './src/screens/NotificationsScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
 import { Bar } from './src/containers/Bar';
+import { BottomSheet } from './src/containers/BottomSheet';
 import { store } from './src/providers/redux/store';
-import { allowedScreens, setTopLevelNavigator } from './src/providers/navigation';
+import { allowedScreens } from './src/providers/navigation';
+import { setAppNavigator } from './src/providers/navigation/tabs';
+import { setBottomSheetNavigator } from './src/providers/navigation/bottomSheet';
 
 enableScreens();
 
@@ -46,17 +48,23 @@ const Navigation = createAppContainer(
 );
 
 const Root = () => (
-  <View style={{ flex: 1 }}>
-    <Provider store={store}>
-      <Navigation
-        ref={navigatorRef => {
-          if (navigatorRef) {
-            setTopLevelNavigator(navigatorRef);
-          }
-        }}
-      />
-    </Provider>
-  </View>
+  <Provider store={store}>
+    <Navigation
+      ref={navigatorRef => {
+        if (navigatorRef) {
+          setAppNavigator(navigatorRef);
+        }
+      }}
+    />
+
+    <BottomSheet
+      forwardRef={navigatorRef => {
+        if (navigatorRef) {
+          setBottomSheetNavigator(navigatorRef);
+        }
+      }}
+    />
+  </Provider>
 );
 
 export default Root;

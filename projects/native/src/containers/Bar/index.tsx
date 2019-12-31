@@ -9,9 +9,12 @@ import IconJourney from '../../components/Icon/_view/Icon_view_journey.svg';
 import IconNotifications from '../../components/Icon/_view/Icon_view_notifications.svg';
 import IconAdd from '../../components/Icon/_view/Icon_view_add.svg';
 import { GlobalState } from '../../providers/redux/store';
-import { navigate } from '../../providers/redux/actions/app';
-import { allowedScreens } from '../../providers/navigation';
+import { navigate, showBottomSheet } from '../../providers/redux/actions/app';
+import { allowedScreens, allowedBottomSheetScreens } from '../../providers/navigation';
 
+interface StyledConteinterProps {
+  visible: boolean;
+}
 const StyledConteinter = styled(View)`
   position: absolute;
 
@@ -20,13 +23,16 @@ const StyledConteinter = styled(View)`
   `}
 
   height: 83px;
-  width: 100%;
 
-  z-index: 10;
+  ${(props: StyledConteinterProps) =>
+    !props.visible
+      ? css`
+          display: none;
+        `
+      : ''}
 `;
 
 const StyledNav = styled(View)`
-  position: relative;
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
@@ -53,7 +59,6 @@ const StyledNavLink = styled(View)`
 `;
 
 const StyledMainNavLink = styled(View)`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -80,6 +85,7 @@ const Avatar = styled(Image)`
 interface BarLinkProps {
   to?: allowedScreens;
   main?: boolean;
+  action?: () => void;
 }
 
 const BarLinkActiveDot = styled(View)`
@@ -121,12 +127,14 @@ const UserIcon: React.FC<{ url: string }> = props =>
 
 export const Bar: React.FC = () => {
   const userAvatarUrl = useSelector((state: GlobalState) => (state.user.auth ? state.user.auth.photoURL : null));
+  const dispatch = useDispatch();
+  const visible = useSelector((state: GlobalState) => state.app.tabs.visible);
   const iconSize = 24;
   const mainIconSize = 50;
   const avatar = userAvatarUrl ? <UserIcon url={userAvatarUrl} /> : null;
 
   return (
-    <StyledConteinter>
+    <StyledConteinter visible={visible}>
       <StyledNav>
         <BarLink to={allowedScreens.Discovery}>
           <IconDiscovery width={iconSize} height={iconSize} />
@@ -136,8 +144,12 @@ export const Bar: React.FC = () => {
           <IconJourney width={iconSize} height={iconSize} />
         </BarLink>
 
-        <BarLink main to={allowedScreens.Add}>
-          <IconAdd width={mainIconSize} height={mainIconSize} />
+        <BarLink main>
+          <IconAdd
+            width={mainIconSize}
+            height={mainIconSize}
+            onPress={() => dispatch(showBottomSheet({ component: allowedBottomSheetScreens.Add }))}
+          />
         </BarLink>
 
         <BarLink to={allowedScreens.Notifications}>
