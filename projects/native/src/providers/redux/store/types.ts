@@ -1,8 +1,8 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
-import { GoogleMapRes, InstagramScrapedPost } from 'faraway.ai-functions';
+// import { GoogleMapRes, InstagramScrapedPost } from 'faraway.ai-functions';
 
-import { allowedScreens } from '../../navigation';
+import { allowedScreens, allowedBottomSheetScreens } from '../../navigation';
 
 export interface GlobalState {
   user: {
@@ -15,12 +15,19 @@ export interface GlobalState {
   add: {
     visible: boolean;
     kind?: 'clipboard';
-    data?: InstagramScrapedPost;
-    desciption?: GoogleMapRes;
+    // data?: InstagramScrapedPost;
+    // desciption?: GoogleMapRes;
   };
   app: {
     state?: AppStateStatus;
     currentScreen: allowedScreens;
     clipboard?: string;
+    bottomSheet: {
+      visible: boolean;
+      component: allowedBottomSheetScreens | null;
+    };
+    tabs: {
+      visible: boolean;
+    };
   };
 }
