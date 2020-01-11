@@ -1,8 +1,32 @@
 import React from 'react';
 
-import { AddBottomSheet } from '../../screens/AddBottomSheet';
+import { AddMenuBottomSheet } from '../../screens/AddMenuBottomSheet';
+import { CreateCollectionBottomSheet } from '../../screens/CreateCollectionBottomSheet';
 
-import { allowedBottomSheetScreens } from '.';
+const bottomSheetPositions = {
+  closed: 0,
+  addMenu: 270,
+  createCollection: 320,
+};
+
+export const bottomSheetSnapPoints = Object.values(bottomSheetPositions);
+
+export const allowedBottomSheetSnaps = {
+  closed: 0,
+  addMenu: 1,
+  createCollection: 2,
+};
+
+export enum allowedBottomSheetScreens {
+  AddMenu = 'AddMenuBottomSheet',
+  CreateCollection = 'CreateCollectionBottomSheet',
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const bottomSheetComponentsRegistry: Record<allowedBottomSheetScreens, React.ComponentType<any>> = {
+  AddMenuBottomSheet,
+  CreateCollectionBottomSheet,
+};
 
 interface BottomSheetNavigator {
   snapTo: (position: number) => void;
@@ -14,21 +38,14 @@ export function setBottomSheetNavigator(navigatorRef: typeof bottomSheetNavigato
   bottomSheetNavigator = navigatorRef;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const bottomSheetComponentsRegistry: Record<allowedBottomSheetScreens, React.ComponentType<any>> = {
-  AddBottomSheet,
-};
-
-export function showNativeBottomSheet(snapTo?: number) {
-  if (bottomSheetNavigator) {
-    setTimeout(() => {
-      bottomSheetNavigator.snapTo(snapTo || 0);
-    }, 0);
-  }
+export function showNativeBottomSheet(snapTo: number) {
+  setTimeout(() => {
+    bottomSheetNavigator.snapTo(snapTo);
+  }, 0);
 }
 
 export const closeNativeBottomSheet = () => {
   setTimeout(() => {
-    bottomSheetNavigator.snapTo(1);
+    bottomSheetNavigator.snapTo(bottomSheetPositions.closed);
   }, 0);
 };

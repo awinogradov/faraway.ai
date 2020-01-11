@@ -11,7 +11,7 @@ export const navigate = (screen: allowedScreens) => createAction(appActionTypes.
 
 export interface ShowBottomSheetProps {
   component: allowedBottomSheetScreens | null;
-  snapTo?: number;
+  snapTo: number;
 }
 export const showBottomSheet = (props: ShowBottomSheetProps) => createAction(appActionTypes.SHOW_BOTTOM_SHEET, props);
 export const setBottomSheetComponent = (component: ShowBottomSheetProps['component']) =>

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import BS from 'reanimated-bottom-sheet';
 import styled from 'styled-components';
 
-import { closeBottomSheet } from '../../providers/redux/actions/app';
-import { GlobalState } from '../../providers/redux/store';
-import { bottomSheetComponentsRegistry } from '../../providers/navigation';
+import { closeBottomSheet } from '../providers/redux/actions/app';
+import { GlobalState } from '../providers/redux/store';
+import { bottomSheetComponentsRegistry, allowedBottomSheetSnaps, bottomSheetSnapPoints } from '../providers/navigation';
 
 export interface BottomSheetProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,8 +67,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = props => {
   return (
     <BS
       ref={props.forwardRef}
-      snapPoints={[270, 0]}
-      initialSnap={1}
+      snapPoints={bottomSheetSnapPoints}
+      initialSnap={allowedBottomSheetSnaps.closed}
       renderContent={() => (
         <Container>
           <ShadowWrapper>

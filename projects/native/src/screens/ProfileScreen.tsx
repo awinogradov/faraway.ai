@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Text } from 'react-native';
 
 import { userSignout } from '../providers/redux/actions/user';
-import { MainScreenView } from '../containers/MainScreenView';
+import { MainScreen } from '../components/MainScreen';
 import { GlobalState } from '../providers/redux/store';
 
 export const ProfileScreen: React.FC = () => {
@@ -22,5 +22,5 @@ export const ProfileScreen: React.FC = () => {
     );
   }
 
-  return <MainScreenView>{profile}</MainScreenView>;
+  return <MainScreen>{profile}</MainScreen>;
 };
