@@ -120,4 +120,6 @@ function post({ html }: ScrapProps): InstagramScrapedPost {
   };
 }
 
-export const scrapInstagram = https.onCall(resolveInstagramContent);
+export const scrapInstagram = https.onRequest(async (req, res) => {
+  res.json(await resolveInstagramContent(req.body));
+});

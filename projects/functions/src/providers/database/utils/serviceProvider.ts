@@ -6,9 +6,9 @@ import { connect } from './connection';
 
 export function provideService<S extends Record<string, any>>(service: S) {
   return service.allowedMethods.reduce((api: Record<string, any>, method: string) => {
-    api[method] = functions.https.onCall(async data => {
+    api[method] = functions.https.onRequest(async (req, res) => {
       await connect();
-      return service[method](data);
+      return res.json(await service[method](req.body));
     });
 
     return api;
