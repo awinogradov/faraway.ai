@@ -1,6 +1,15 @@
 import { NavigationActions, NavigationContainerComponent } from 'react-navigation';
 
-import { allowedScreens } from '.';
+export enum allowedScreens {
+  Initialize = 'InitializeScreen',
+  Discovery = 'DiscoveryScreen',
+  Signin = 'SigninScreen',
+  Profile = 'ProfileScreen',
+  Progress = 'ProgressScreen',
+  Notifications = 'NotificationsScreen',
+  Auth = 'Auth',
+  App = 'App',
+}
 
 let appNavigator: NavigationContainerComponent;
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { MainScreenView } from '../containers/MainScreenView';
+import { MainScreen } from '../components/MainScreen';
 
 export const DiscoveryScreen: React.FC = () => {
   return (
-    <MainScreenView>
+    <MainScreen>
       <Text>Discovery</Text>
-    </MainScreenView>
+    </MainScreen>
   );
 };
