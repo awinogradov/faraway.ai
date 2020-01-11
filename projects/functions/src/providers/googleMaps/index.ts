@@ -57,4 +57,6 @@ async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> 
   };
 }
 
-export const googleMapsSearch = https.onCall(findOnGoogleMaps);
+export const googleMapsSearch = https.onRequest(async (req, res) => {
+  res.json(await findOnGoogleMaps(req.body));
+});
