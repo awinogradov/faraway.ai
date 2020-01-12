@@ -10,6 +10,7 @@ import {
   clipboardWrite,
   navigate,
   showBottomSheet,
+  closeBottomSheet,
   setBottomSheetComponent,
   closeTabs,
   showTabs,
@@ -25,9 +26,9 @@ function* callShowNativeBottomSheet(action: ReturnType<typeof showBottomSheet>) 
   yield call(showNativeBottomSheet, action.payload.snapTo);
 }
 
-function* callCloseNativeBottomSheet() {
+function* callCloseNativeBottomSheet(action: ReturnType<typeof closeBottomSheet>) {
   yield put(showTabs());
-  yield call(closeNativeBottomSheet);
+  yield call(closeNativeBottomSheet, action.payload);
 }
 
 function* resolveClipboardContent() {

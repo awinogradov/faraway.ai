@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin } from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
@@ -62,6 +63,28 @@ function* inProgress() {
 }
 
 function* success(action: ReturnType<typeof userAuthChangeSuccess>) {
+  if (action.payload) {
+    const userProps = {
+      email: action.payload.email,
+      oauth: action.payload.uid,
+    };
+
+    let userAlreadyExists = yield call(() =>
+      fetch('http://localhost:5000/faraway-ai/us-central1/db-user-snapshot', {
+        method: 'POST',
+        body: JSON.stringify(userProps),
+      }).then(res => res.json()),
+    );
+
+    if (!userAlreadyExists) {
+      userAlreadyExists = yield call(() =>
+        fetch('http://localhost:5000/faraway-ai/us-central1/db-user-create', {
+          method: 'POST',
+          body: JSON.stringify(userProps),
+        }).then(res => res.json()),
+      );
+    }
+  }
   yield put(navigate(action.payload ? allowedScreens.App : allowedScreens.Auth));
 }
 

@@ -16,7 +16,7 @@ export interface ShowBottomSheetProps {
 export const showBottomSheet = (props: ShowBottomSheetProps) => createAction(appActionTypes.SHOW_BOTTOM_SHEET, props);
 export const setBottomSheetComponent = (component: ShowBottomSheetProps['component']) =>
   createAction(appActionTypes.SET_BOTTOM_SHEET_COMPONENT, component);
-export const closeBottomSheet = () => createEmptyAction(appActionTypes.CLOSE_BOTTOM_SHEET);
+export const closeBottomSheet = (timeout?: number) => createAction(appActionTypes.CLOSE_BOTTOM_SHEET, timeout);
 
 export const showTabs = () => createEmptyAction(appActionTypes.SHOW_TABS);
 export const closeTabs = () => createEmptyAction(appActionTypes.CLOSE_TABS);

@@ -58,5 +58,11 @@ async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> 
 }
 
 export const googleMapsSearch = https.onRequest(async (req, res) => {
-  res.json(await findOnGoogleMaps(req.body));
+  let props = req.body;
+
+  if (typeof props === 'string') {
+    props = JSON.parse(props);
+  }
+
+  res.json(await findOnGoogleMaps(props));
 });

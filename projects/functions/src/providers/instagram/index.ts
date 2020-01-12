@@ -121,5 +121,11 @@ function post({ html }: ScrapProps): InstagramScrapedPost {
 }
 
 export const scrapInstagram = https.onRequest(async (req, res) => {
-  res.json(await resolveInstagramContent(req.body));
+  let props = req.body;
+
+  if (typeof props === 'string') {
+    props = JSON.parse(props);
+  }
+
+  res.json(await resolveInstagramContent(props));
 });

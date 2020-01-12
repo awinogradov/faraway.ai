@@ -1,20 +1,32 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
-import database from '@react-native-firebase/database';
 
-import { addActionTypes, addPointSuccess } from '../actions/add';
+import { databaseActionTypes } from '../constants/database';
+import { processSuccess, processError } from '../actions/process';
+import { databaseCreateCollection } from '../actions/database';
 
-async function addToCloak(data) {
-  const ref = database().ref(`/cloak/test/${data.location.id}`);
+const createCollectrionProcess = 'createCollection';
 
-  return ref.set(data);
-}
+function* createCollection(action: ReturnType<typeof databaseCreateCollection>) {
+  const collection = yield call(() =>
+    fetch('http://localhost:5000/faraway-ai/us-central1/db-collection-create', {
+      method: 'POST',
+      body: JSON.stringify(action.payload),
+    })
+      .then(res => {
+        if (!res.ok) return { error: res.statusText || 'Smth went wrong...' };
 
-function* addPointToDatabase(data) {
-  yield call(addToCloak, data.payload);
+        return res.json();
+      })
+      .catch((error: Error) => error),
+  );
 
-  yield put(addPointSuccess());
+  if (!collection.error) {
+    yield put(processSuccess({ key: createCollectrionProcess, value: collection }));
+  } else {
+    yield put(processError({ key: createCollectrionProcess, error: new Error(collection.error) }));
+  }
 }
 
 export function* databaseSaga() {
-  yield takeEvery(addActionTypes.ADD_POINT, addPointToDatabase);
+  yield takeEvery(databaseActionTypes.CREATE_COLLECTION, createCollection);
 }
