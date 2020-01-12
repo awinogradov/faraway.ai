@@ -2,7 +2,7 @@ import React from 'react';
 import { Button as BaseButton, ButtonProps as BaseButtonProps } from 'react-native-elements';
 
 export interface ButtonProps extends BaseButtonProps {
-  view: 'action' | 'clear' | 'outline';
+  view: 'action' | 'clear' | 'outline' | 'success' | 'error';
 }
 
 const commonButtonStyles: BaseButtonProps['buttonStyle'] = {
@@ -20,6 +20,34 @@ const ButtonViewAction: React.FC<BaseButtonProps> = props => (
     buttonStyle={{
       ...commonButtonStyles,
       backgroundColor: '#000',
+    }}
+    titleStyle={{
+      ...commonTitleStyles,
+      color: '#fff',
+      fontWeight: '500',
+    }}
+    {...props}
+  />
+);
+const ButtonViewSuccess: React.FC<BaseButtonProps> = props => (
+  <BaseButton
+    buttonStyle={{
+      ...commonButtonStyles,
+      backgroundColor: '#34c759',
+    }}
+    titleStyle={{
+      ...commonTitleStyles,
+      color: '#fff',
+      fontWeight: '500',
+    }}
+    {...props}
+  />
+);
+const ButtonViewError: React.FC<BaseButtonProps> = props => (
+  <BaseButton
+    buttonStyle={{
+      ...commonButtonStyles,
+      backgroundColor: '#ff3b30',
     }}
     titleStyle={{
       ...commonTitleStyles,
@@ -48,6 +76,8 @@ const ButtonViewMap: Record<ButtonProps['view'], React.ComponentType<BaseButtonP
   action: ButtonViewAction,
   clear: ButtonViewClear,
   outline: ButtonViewOutline,
+  success: ButtonViewSuccess,
+  error: ButtonViewError,
 };
 
 export const Button: React.FC<ButtonProps> = ({ view, ...props }) => {

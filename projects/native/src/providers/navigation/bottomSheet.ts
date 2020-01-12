@@ -44,8 +44,8 @@ export function showNativeBottomSheet(snapTo: number) {
   }, 0);
 }
 
-export const closeNativeBottomSheet = () => {
+export const closeNativeBottomSheet = (timeout: number = 0) => {
   setTimeout(() => {
     bottomSheetNavigator.snapTo(bottomSheetPositions.closed);
-  }, 0);
+  }, timeout);
 };

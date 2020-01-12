@@ -18,7 +18,15 @@ export async function snapshot(collection: Collection): Promise<Collection> {
 }
 
 export async function create(draft: CollectionDraft): Promise<Collection> {
-  const collection = new Collection(draft);
+  const user = await User.findOne({ oauth: draft.createdBy });
+
+  if (!user) throw new Error(`Can't find user: ${draft.createdBy}`);
+
+  const notSaved: CollectionDraft = {
+    ...draft,
+    createdBy: user._id,
+  };
+  const collection = new Collection(notSaved);
 
   await collection.save().catch(err => {
     throw new Error(err);

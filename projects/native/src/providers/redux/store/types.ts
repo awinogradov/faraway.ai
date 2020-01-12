@@ -1,16 +1,23 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
-// import { GoogleMapRes, InstagramScrapedPost } from 'faraway.ai-functions';
 
 import { allowedScreens, allowedBottomSheetScreens } from '../../navigation';
 
 export interface GlobalState {
+  process: Record<
+    string,
+    | {
+        inProgress?: boolean;
+        isSuccess?: boolean;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        value?: any;
+        error?: Error;
+      }
+    | undefined
+  >;
   user: {
     auth?: FirebaseAuthTypes.User;
     error?: Error;
-  };
-  clipboard: {
-    content?: string;
   };
   add: {
     visible: boolean;
