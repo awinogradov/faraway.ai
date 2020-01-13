@@ -1,6 +1,6 @@
 import { createAction } from '../../../utils/actionCreator';
 import { databaseActionTypes } from '../constants/database';
-import { CreateCollection } from '../../../typings/functions';
+import { CreateJourney } from '../../../typings/functions';
 
-export const databaseCreateCollection = (draft: CreateCollection) =>
+export const databaseCreateJourney = (draft: CreateJourney) =>
   createAction(databaseActionTypes.CREATE_COLLECTION, draft);

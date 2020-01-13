@@ -1,14 +1,13 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 
 import { databaseActionTypes } from '../constants/database';
+import { processTypes } from '../constants/process';
 import { processSuccess, processError } from '../actions/process';
-import { databaseCreateCollection } from '../actions/database';
+import { databaseCreateJourney } from '../actions/database';
 
-const createCollectrionProcess = 'createCollection';
-
-function* createCollection(action: ReturnType<typeof databaseCreateCollection>) {
-  const collection = yield call(() =>
-    fetch('http://localhost:5000/faraway-ai/us-central1/db-collection-create', {
+function* createJourney(action: ReturnType<typeof databaseCreateJourney>) {
+  const journey = yield call(() =>
+    fetch('http://localhost:5000/faraway-ai/us-central1/db-journey-create', {
       method: 'POST',
       body: JSON.stringify(action.payload),
     })
@@ -20,13 +19,13 @@ function* createCollection(action: ReturnType<typeof databaseCreateCollection>) 
       .catch((error: Error) => error),
   );
 
-  if (!collection.error) {
-    yield put(processSuccess({ key: createCollectrionProcess, value: collection }));
+  if (!journey.error) {
+    yield put(processSuccess({ key: processTypes.createJourneyProcess, value: journey }));
   } else {
-    yield put(processError({ key: createCollectrionProcess, error: new Error(collection.error) }));
+    yield put(processError({ key: processTypes.createJourneyProcess, error: new Error(journey.error) }));
   }
 }
 
 export function* databaseSaga() {
-  yield takeEvery(databaseActionTypes.CREATE_COLLECTION, createCollection);
+  yield takeEvery(databaseActionTypes.CREATE_JOURNEY, createJourney);
 }

@@ -19,7 +19,7 @@ export const AddMenuBottomSheet: React.FC = () => {
 
   const mainMenu: MenuProps['items'] = [
     {
-      title: 'Collection',
+      title: 'Journey',
       onPress: () => {
         dispatch(
           showBottomSheet({

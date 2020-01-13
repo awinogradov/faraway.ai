@@ -8,23 +8,23 @@ import { Button, ButtonProps } from '../components/Button';
 import { BottomSheetActions } from '../components/BottomSheetActions';
 import { BottomSheetCreateScreen } from '../components/BottomSheetCreateScreen';
 import { closeBottomSheet } from '../providers/redux/actions/app';
+import { processTypes } from '../providers/redux/constants/process';
 import { emitProcess, deleteProcess } from '../providers/redux/actions/process';
-import { databaseCreateCollection } from '../providers/redux/actions/database';
+import { databaseCreateJourney } from '../providers/redux/actions/database';
 import { GlobalState } from '../providers/redux/store';
 
-export const CreateCollectionBottomSheet: React.FC = () => {
+export const CreateJourneyBottomSheet: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: GlobalState) => state.user);
 
-  const createCollectrionProcess = 'createCollection';
-  const process = useSelector((state: GlobalState) => state.process[createCollectrionProcess]);
+  const process = useSelector((state: GlobalState) => state.process[processTypes.createJourneyProcess]);
   const [collectionTitle, setCollectionTitle] = useState('');
 
   const onSave = () => {
-    dispatch(emitProcess(createCollectrionProcess));
+    dispatch(emitProcess(processTypes.createJourneyProcess));
 
     dispatch(
-      databaseCreateCollection({
+      databaseCreateJourney({
         createdBy: user.auth!.uid,
         title: collectionTitle,
       }),
@@ -32,7 +32,7 @@ export const CreateCollectionBottomSheet: React.FC = () => {
   };
   const onCancel = () => {
     dispatch(closeBottomSheet());
-    setTimeout(() => dispatch(deleteProcess(createCollectrionProcess)), 50);
+    setTimeout(() => dispatch(deleteProcess(processTypes.createJourneyProcess)), 50);
   };
 
   const inProgress = process && process.inProgress;
@@ -53,7 +53,7 @@ export const CreateCollectionBottomSheet: React.FC = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(closeBottomSheet(300));
-      setTimeout(() => dispatch(deleteProcess(createCollectrionProcess)), 350);
+      setTimeout(() => dispatch(deleteProcess(processTypes.createJourneyProcess)), 350);
     }
   });
 

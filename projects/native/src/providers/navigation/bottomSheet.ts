@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AddMenuBottomSheet } from '../../screens/AddMenuBottomSheet';
-import { CreateCollectionBottomSheet } from '../../screens/CreateCollectionBottomSheet';
+import { CreateJourneyBottomSheet } from '../../screens/CreateJourneyBottomSheet';
 
 const bottomSheetPositions = {
   closed: 0,
@@ -19,13 +19,13 @@ export const allowedBottomSheetSnaps = {
 
 export enum allowedBottomSheetScreens {
   AddMenu = 'AddMenuBottomSheet',
-  CreateCollection = 'CreateCollectionBottomSheet',
+  CreateCollection = 'CreateJourneyBottomSheet',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const bottomSheetComponentsRegistry: Record<allowedBottomSheetScreens, React.ComponentType<any>> = {
   AddMenuBottomSheet,
-  CreateCollectionBottomSheet,
+  CreateJourneyBottomSheet,
 };
 
 interface BottomSheetNavigator {
