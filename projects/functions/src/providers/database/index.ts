@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-param-reassign */
-import * as collectionService from './Collection/Collection.service';
+import * as journeyService from './Journey/Journey.service';
 import * as locationService from './Location/Location.service';
 import * as noteService from './Note/Note.service';
 import * as userService from './User/User.service';
@@ -11,6 +11,6 @@ export const db = {
   location: provideService(locationService),
   note: provideService(noteService),
   user: provideService(userService),
-  collection: provideService(collectionService),
+  journey: provideService(journeyService),
   attraction: provideService(attractionService),
 };

@@ -5,7 +5,7 @@ import { Note, NoteDraft } from './Note.model';
 export async function snapshot(note: Note): Promise<Note> {
   return Note.findOne(note)
     .populate('createdBy')
-    .populate('collections')
+    .populate('journeys')
     .catch(err => {
       throw new Error(err);
     });

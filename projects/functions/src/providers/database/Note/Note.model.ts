@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 import { v4 } from 'uuid';
 
 import { UserDocument } from '../User/User.model';
-import { CollectionDocument } from '../Collection/Collection.model';
+import { JourneyDocument } from '../Journey/Journey.model';
 
 export interface NoteDocument extends Document {
   kind: 'note';
@@ -11,7 +11,7 @@ export interface NoteDocument extends Document {
   content: string;
   created: number;
   createdBy: UserDocument;
-  collections: CollectionDocument[];
+  journeys: JourneyDocument[];
 }
 
 type DraftColumns = 'content' | 'createdBy';
@@ -23,7 +23,7 @@ const NoteSchema = new Schema<NoteDocument>({
   content: { type: String },
   created: { type: Number, default: Date.now },
   createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-  collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
+  journeys: [{ type: Schema.Types.ObjectId, ref: 'Journey' }],
 });
 
 export class Note extends mongoose.model<NoteDocument>('Note', NoteSchema) {

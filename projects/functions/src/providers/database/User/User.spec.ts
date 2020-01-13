@@ -22,7 +22,7 @@ describe(`database: ${User.name}`, () => {
     expect(user.email).to.be.eq(testUser.email);
     expect(user.oauth).to.be.eq(testUser.oauth);
     expect(user.created).to.be.not.eq(undefined);
-    expect(user.collections).to.be.not.eq(undefined);
+    expect(user.journeys).to.be.not.eq(undefined);
   });
 
   it('create: disallow duplicate', async () => {

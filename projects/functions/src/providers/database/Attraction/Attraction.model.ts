@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 
 import { UserDocument } from '../User/User.model';
 import { LocationDocument } from '../Location/Location.model';
-import { CollectionDocument } from '../Collection/Collection.model';
+import { JourneyDocument } from '../Journey/Journey.model';
 
 export interface AttractionDocument extends Document {
   kind: 'attraction';
@@ -13,7 +13,7 @@ export interface AttractionDocument extends Document {
   created: number;
   createdBy: UserDocument;
   location: LocationDocument;
-  collections: CollectionDocument[];
+  journeys: JourneyDocument[];
 }
 
 type DraftColumns = 'title' | 'createdBy' | 'location';
@@ -26,7 +26,7 @@ const AttractionSchema = new Schema<AttractionDocument>({
   created: { type: Number, default: Date.now },
   createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   location: { type: Schema.Types.ObjectId, required: true, ref: 'Location' },
-  collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
+  journeys: [{ type: Schema.Types.ObjectId, ref: 'Journey' }],
 });
 
 export class Attraction extends mongoose.model<AttractionDocument>('Attraction', AttractionSchema) {

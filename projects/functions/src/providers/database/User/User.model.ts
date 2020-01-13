@@ -2,7 +2,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { v4 } from 'uuid';
 
-import { CollectionDocument } from '../Collection/Collection.model';
+import { JourneyDocument } from '../Journey/Journey.model';
 
 export interface UserDocument extends Document {
   kind: 'user';
@@ -10,7 +10,7 @@ export interface UserDocument extends Document {
   email: string;
   oauth: string;
   created: number;
-  collections: CollectionDocument[];
+  journeys: JourneyDocument[];
 }
 
 type DraftColumns = 'email' | 'oauth';
@@ -22,7 +22,7 @@ const UserSchema = new Schema<UserDocument>({
   email: { type: String, required: true, unique: true },
   oauth: { type: String, required: true, unique: true },
   created: { type: Number, default: Date.now },
-  collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
+  journeys: [{ type: Schema.Types.ObjectId, ref: 'Journey' }],
 });
 
 export class User extends mongoose.model<UserDocument>('User', UserSchema) {
