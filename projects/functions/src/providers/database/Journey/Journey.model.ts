@@ -6,31 +6,37 @@ import { UserDocument } from '../User/User.model';
 import { NoteDocument } from '../Note/Note.model';
 import { AttractionDocument } from '../Attraction/Attraction.model';
 
-export interface CollectionDocument extends Document {
+export interface JourneyDocument extends Document {
   id: string;
   title: string;
+  description: string;
   created: number;
+  startsAt: number;
+  endsAt: number;
   createdBy: UserDocument;
-  users: UserDocument[];
+  members: UserDocument[];
   notes: NoteDocument[];
   attractions: AttractionDocument[];
 }
 
-type DraftColumns = 'title' | 'createdBy';
-export type CollectionDraft = Pick<CollectionDocument, DraftColumns>;
+type DraftColumns = 'title' | 'description' | 'startsAt' | 'endsAt' | 'members';
+export type JourneyDraft = Pick<JourneyDocument, DraftColumns> & { createdBy: string };
 
-const CollectionSchema = new Schema<CollectionDocument>({
+const JourneySchema = new Schema<JourneyDocument>({
   id: { type: String, default: v4, unique: true },
   title: { type: String, required: true },
+  description: { type: String },
   created: { type: Number, default: Date.now },
+  startsAt: { type: Number, default: Date.now },
+  endsAt: { type: Number, default: Date.now },
   createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
-  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
   attractions: [{ type: Schema.Types.ObjectId, ref: 'Attraction' }],
 });
 
-export class Collection extends mongoose.model<CollectionDocument>('Collection', CollectionSchema) {
-  constructor(props: CollectionDraft) {
+export class Journey extends mongoose.model<JourneyDocument>('Journey', JourneySchema) {
+  constructor(props: JourneyDraft) {
     super(props);
   }
 }

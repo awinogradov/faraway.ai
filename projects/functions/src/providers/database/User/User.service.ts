@@ -4,7 +4,7 @@ import { User, UserDraft } from './User.model';
 
 export async function snapshot(user: User): Promise<User> {
   return User.findOne(user)
-    .populate('collections')
+    .populate('journeys')
     .catch(err => {
       throw new Error(err);
     });

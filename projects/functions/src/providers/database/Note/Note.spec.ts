@@ -32,7 +32,7 @@ describe(`database: ${Note.name}`, () => {
     expect(note.createdBy).to.be.not.eq(undefined);
     expect(note.content).to.be.eq(draft.content);
     expect(note.createdBy.email).to.be.eq(testUser.email);
-    expect(note.collections).to.be.not.eq(undefined);
+    expect(note.journeys).to.be.not.eq(undefined);
   });
 
   it('update', async () => {
