@@ -1,7 +1,7 @@
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
 
-import { allowedScreens, allowedBottomSheetScreens } from '../../navigation';
+import { allowedScreens, bottomSheetComponents } from '../providers/navigation';
 
 export interface GlobalState {
   process: Record<
@@ -31,7 +31,7 @@ export interface GlobalState {
     clipboard?: string;
     bottomSheet: {
       visible: boolean;
-      component: allowedBottomSheetScreens | null;
+      component: keyof typeof bottomSheetComponents | null;
     };
     tabs: {
       visible: boolean;

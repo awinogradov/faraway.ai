@@ -2,7 +2,7 @@
 import { AppState } from 'react-native';
 import { produce } from 'immer';
 
-import { GlobalState } from '../store/types';
+import { GlobalState } from '../../../typings/state';
 import { appActionTypes } from '../constants/app';
 import * as appActions from '../actions/app';
 import { allowedScreens } from '../../navigation';

@@ -12,8 +12,9 @@ import { processTypes } from '../providers/redux/constants/process';
 import { emitProcess, deleteProcess } from '../providers/redux/actions/process';
 import { databaseCreateJourney } from '../providers/redux/actions/database';
 import { GlobalState } from '../providers/redux/store';
+import { BottomSheetComponent } from '../typings/bottomSheet';
 
-export const CreateJourneyBottomSheet: React.FC = () => {
+export const CreateJourneyBottomSheet: BottomSheetComponent = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: GlobalState) => state.user);
 
@@ -48,7 +49,6 @@ export const CreateJourneyBottomSheet: React.FC = () => {
   if (isError) buttonTitle = (process && process.error && process.error.message) || 'Plz try again...';
 
   const actionButtonIsDisabled = collectionTitle.length === 0;
-  // set bottom sheet snaps by GlobalState
 
   useEffect(() => {
     if (isSuccess) {
@@ -58,7 +58,7 @@ export const CreateJourneyBottomSheet: React.FC = () => {
   });
 
   return (
-    <BottomSheetCreateScreen title="Collection">
+    <BottomSheetCreateScreen title="Journey">
       <Form>
         <FormField label="Title">
           <Input onChangeText={value => setCollectionTitle(value)} value={collectionTitle} disabled={isSuccess} />
@@ -78,3 +78,5 @@ export const CreateJourneyBottomSheet: React.FC = () => {
     </BottomSheetCreateScreen>
   );
 };
+
+CreateJourneyBottomSheet.position = 320;

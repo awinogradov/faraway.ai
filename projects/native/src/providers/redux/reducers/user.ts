@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 import { produce } from 'immer';
 
 import { ActionTypes } from '../../../utils/actionTypes';
-import { GlobalState } from '../store/types';
+import { GlobalState } from '../../../typings/state';
 import { userActionTypes } from '../constants/user';
 import * as userActions from '../actions/user';
 

@@ -2,7 +2,8 @@ import { AppStateStatus } from 'react-native';
 
 import { appActionTypes } from '../constants/app';
 import { createAction, createEmptyAction } from '../../../utils/actionCreator';
-import { allowedScreens, allowedBottomSheetScreens } from '../../navigation';
+import { allowedScreens } from '../../navigation';
+import { GlobalState } from '../store';
 
 export const stateChange = (state: AppStateStatus) => createAction(appActionTypes.STATE_CHANGE, state);
 export const stateActive = () => createEmptyAction(appActionTypes.STATE_ACTIVE);
@@ -10,8 +11,8 @@ export const stateActive = () => createEmptyAction(appActionTypes.STATE_ACTIVE);
 export const navigate = (screen: allowedScreens) => createAction(appActionTypes.NAVIGATE, screen);
 
 export interface ShowBottomSheetProps {
-  component: allowedBottomSheetScreens | null;
-  snapTo: number;
+  component: GlobalState['app']['bottomSheet']['component'];
+  snapTo?: number;
 }
 export const showBottomSheet = (props: ShowBottomSheetProps) => createAction(appActionTypes.SHOW_BOTTOM_SHEET, props);
 export const setBottomSheetComponent = (component: ShowBottomSheetProps['component']) =>

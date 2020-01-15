@@ -5,17 +5,13 @@ import { Menu, MenuProps } from '../components/Menu';
 import { BottomSheetMenuScreen } from '../components/BottomSheetMenuScreen';
 import { BottomSheetActions } from '../components/BottomSheetActions';
 import { BottomSheetClose } from '../components/BottomSheetClose';
-import {
-  allowedScreens,
-  appNavigate,
-  allowedBottomSheetScreens,
-  allowedBottomSheetSnaps,
-} from '../providers/navigation';
+import { /* allowedScreens, appNavigate,*/ bottomSheetComponents } from '../providers/navigation';
 import { closeBottomSheet, showBottomSheet } from '../providers/redux/actions/app';
+import { BottomSheetComponent } from '../typings/bottomSheet';
 
-export const AddMenuBottomSheet: React.FC = () => {
+export const AddMenuBottomSheet: BottomSheetComponent = () => {
   const dispatch = useDispatch();
-  const provideOnPress = (destination: allowedScreens) => () => dispatch(appNavigate(destination));
+  // const provideOnPress = (destination: allowedScreens) => () => dispatch(appNavigate(destination));
 
   const mainMenu: MenuProps['items'] = [
     {
@@ -23,13 +19,21 @@ export const AddMenuBottomSheet: React.FC = () => {
       onPress: () => {
         dispatch(
           showBottomSheet({
-            snapTo: allowedBottomSheetSnaps.createCollection,
-            component: allowedBottomSheetScreens.CreateCollection,
+            component: bottomSheetComponents.CreateJourneyBottomSheet,
           }),
         );
       },
     },
-    { title: 'Point', onPress: provideOnPress(allowedScreens.Discovery) },
+    {
+      title: 'Point',
+      onPress: () => {
+        dispatch(
+          showBottomSheet({
+            component: bottomSheetComponents.CreateJourneyBottomSheet,
+          }),
+        );
+      },
+    },
   ];
 
   const onClose = () => dispatch(closeBottomSheet());
@@ -44,3 +48,5 @@ export const AddMenuBottomSheet: React.FC = () => {
     </BottomSheetMenuScreen>
   );
 };
+
+AddMenuBottomSheet.position = 270;

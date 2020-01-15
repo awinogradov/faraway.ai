@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { closeBottomSheet } from '../providers/redux/actions/app';
 import { GlobalState } from '../providers/redux/store';
-import { bottomSheetComponentsRegistry, allowedBottomSheetSnaps, bottomSheetSnapPoints } from '../providers/navigation';
+import { bottomSheetComponentsRegistry, allowedSnaps } from '../providers/navigation';
 
 export interface BottomSheetProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,8 +67,9 @@ export const BottomSheet: React.FC<BottomSheetProps> = props => {
   return (
     <BS
       ref={props.forwardRef}
-      snapPoints={bottomSheetSnapPoints}
-      initialSnap={allowedBottomSheetSnaps.closed}
+      enabledGestureInteraction={false}
+      snapPoints={allowedSnaps}
+      initialSnap={0}
       renderContent={() => (
         <Container>
           <ShadowWrapper>

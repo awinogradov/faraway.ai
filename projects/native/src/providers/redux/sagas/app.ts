@@ -3,7 +3,7 @@ import { Clipboard } from 'react-native';
 import isUrl from 'validator/lib/isURL';
 
 // import { scrapInstagram, googleMapsSearch } from '../../functions';
-import { appNavigate, showNativeBottomSheet, closeNativeBottomSheet } from '../../navigation';
+import { appNavigate, showNativeBottomSheet, closeNativeBottomSheet, calcSnapForComponent } from '../../navigation';
 import { appActionTypes } from '../constants/app';
 import {
   clipboardRead,
@@ -23,7 +23,7 @@ function* callNativeNavigation(action: ReturnType<typeof navigate>) {
 function* callShowNativeBottomSheet(action: ReturnType<typeof showBottomSheet>) {
   yield put(closeTabs());
   yield put(setBottomSheetComponent(action.payload.component));
-  yield call(showNativeBottomSheet, action.payload.snapTo);
+  yield call(showNativeBottomSheet, calcSnapForComponent(action.payload.component));
 }
 
 function* callCloseNativeBottomSheet(action: ReturnType<typeof closeBottomSheet>) {
