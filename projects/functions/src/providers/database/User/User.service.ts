@@ -3,11 +3,10 @@ import { EntityUpdate } from '../../../typings';
 import { User, UserDraft } from './User.model';
 
 export async function snapshot(user: User): Promise<User> {
+  // @ts-ignore
   return User.findOne(user)
     .populate('journeys')
-    .catch(err => {
-      throw new Error(err);
-    });
+    .exec();
 }
 
 export async function create(draft: UserDraft): Promise<User> {

@@ -8,6 +8,7 @@ interface NonGeneratedColumns {
 }
 
 export const journeyDraftCreator = ({ createdBy }: NonGeneratedColumns): Readonly<JourneyDraft> =>
+  // @ts-ignore
   Object.freeze({
     title: faker.lorem.words(3),
     description: faker.lorem.paragraph(),

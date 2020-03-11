@@ -2,13 +2,23 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { Location } from './Location.model';
+import { LocationType } from '../LocationType/LocationType.model';
+import * as locationKindService from '../LocationType/LocationType.service';
+import { locationTypeDraftCreator } from '../LocationType/LocationType.seed';
+
+import { Location, LocationDraft } from './Location.model';
 import * as locationService from './Location.service';
 import { locationDraftCreator, dangerouslyDropAllRecords } from './Location.seed';
 
-const testLocation = locationDraftCreator();
-
 describe(`database: ${Location.name}`, () => {
+  let testLocationType: LocationType;
+  let testLocation: LocationDraft;
+
+  before(async () => {
+    testLocationType = await locationKindService.create(locationTypeDraftCreator());
+    testLocation = locationDraftCreator({ type: testLocationType });
+  });
+
   afterEach(async () => {
     await dangerouslyDropAllRecords();
   });

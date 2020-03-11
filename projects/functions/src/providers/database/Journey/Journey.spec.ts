@@ -9,11 +9,6 @@ import { userDraftCreator } from '../User/User.seed';
 import { Note } from '../Note/Note.model';
 import * as noteService from '../Note/Note.service';
 import { noteDraftCreator } from '../Note/Note.seed';
-import { Attraction } from '../Attraction/Attraction.model';
-import * as attractionService from '../Attraction/Attraction.service';
-import { attractionDraftCreator } from '../Attraction/Attraction.seed';
-import * as locationService from '../Location/Location.service';
-import { locationDraftCreator } from '../Location/Location.seed';
 
 import { Journey } from './Journey.model';
 import * as journeyService from './Journey.service';
@@ -23,18 +18,11 @@ describe(`database: ${Journey.name}`, () => {
   let testUser: User;
   let sharedWithUser: User;
   let collectedNote: Note;
-  let collectedAttraction: Attraction;
 
   before(async () => {
     testUser = await userService.create(userDraftCreator());
     sharedWithUser = await userService.create(userDraftCreator());
     collectedNote = await noteService.create(noteDraftCreator({ createdBy: testUser }));
-    collectedAttraction = await attractionService.create(
-      attractionDraftCreator({
-        createdBy: testUser,
-        location: await locationService.create(locationDraftCreator()),
-      }),
-    );
   });
 
   afterEach(async () => {
@@ -50,7 +38,6 @@ describe(`database: ${Journey.name}`, () => {
     expect(journey.title).to.be.eq(draft.title);
     expect(journey.createdBy.email).to.be.eql(testUser.email);
     expect(journey.notes).to.be.not.eq(undefined);
-    expect(journey.attractions).to.be.not.eq(undefined);
   });
 
   it('update', async () => {
@@ -143,32 +130,32 @@ describe(`database: ${Journey.name}`, () => {
     });
   });
 
-  describe('attractions', () => {
-    it('link', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
-      const updated = await journeyService.link({ journey, entity: collectedAttraction });
+  // describe('attractions', () => {
+  //   it('link', async () => {
+  //     const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+  //     const updated = await journeyService.link({ journey, entity: collectedAttraction });
 
-      expect(updated.attractions[0].id).to.be.eq(collectedAttraction.id);
-    });
+  //     expect(updated.attractions[0].id).to.be.eq(collectedAttraction.id);
+  //   });
 
-    it('uniq', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+  //   it('uniq', async () => {
+  //     const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
 
-      await journeyService.link({ journey, entity: collectedAttraction });
-      await journeyService.link({ journey, entity: collectedAttraction }).catch((err: Error) => {
-        expect(err.message).contains(
-          `${collectedAttraction.kind}: ${collectedAttraction.id} already exists in journey: ${journey.id}`,
-        );
-      });
-    });
+  //     await journeyService.link({ journey, entity: collectedAttraction });
+  //     await journeyService.link({ journey, entity: collectedAttraction }).catch((err: Error) => {
+  //       expect(err.message).contains(
+  //         `${collectedAttraction.kind}: ${collectedAttraction.id} already exists in journey: ${journey.id}`,
+  //       );
+  //     });
+  //   });
 
-    it('unlink', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
-      const linked = await journeyService.link({ journey, entity: collectedAttraction });
-      expect(linked.attractions.length).to.be.eq(1);
+  //   it('unlink', async () => {
+  //     const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+  //     const linked = await journeyService.link({ journey, entity: collectedAttraction });
+  //     expect(linked.attractions.length).to.be.eq(1);
 
-      const unlinked = await journeyService.unlink({ journey, entity: collectedAttraction });
-      expect(unlinked.attractions.length).to.be.eq(0);
-    });
-  });
+  //     const unlinked = await journeyService.unlink({ journey, entity: collectedAttraction });
+  //     expect(unlinked.attractions.length).to.be.eq(0);
+  //   });
+  // });
 });

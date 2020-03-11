@@ -31,7 +31,7 @@ export interface GlobalState {
     clipboard?: string;
     bottomSheet: {
       visible: boolean;
-      component: keyof typeof bottomSheetComponents | null;
+      component: bottomSheetComponents;
     };
     tabs: {
       visible: boolean;

@@ -35,6 +35,17 @@ export function googleMaps() {
   return googleMapsClient;
 }
 
+/**
+ * Visible photo url
+ *
+ * @see https://developers.google.com/places/web-service/photos#place_photo_requests
+ *
+ * @param reference photo id
+ * @returns url
+ */
+export const googleMapsPhotoUrl = (reference: string) =>
+  `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${reference}&key=${config.googleMaps.key}`;
+
 async function findOnGoogleMaps(search: GoogleMapsProps): Promise<GoogleMapRes> {
   const gmc = googleMaps();
   const googleMapsLocationGeocode = await gmc.geocode(search).asPromise();
