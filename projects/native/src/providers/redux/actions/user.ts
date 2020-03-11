@@ -8,6 +8,8 @@ export const userAuthChangeInProgress = () => createEmptyAction(userActionTypes.
 export const userAuthChangeSuccess = (user?: FirebaseAuthTypes.User) =>
   createAction(userActionTypes.AUTH_CHANGE_SUCCESS, user);
 
+export const userSetId = (id?: string) => createAction(userActionTypes.SET_ID, id);
+
 export const userFbSignin = () => createEmptyAction(userActionTypes.FB_SIGNIN);
 export const userGglSignin = () => createEmptyAction(userActionTypes.GGL_SIGNIN);
 export const userSignout = () => createEmptyAction(userActionTypes.SIGNOUT);

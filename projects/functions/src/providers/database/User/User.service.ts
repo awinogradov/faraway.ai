@@ -1,49 +1,66 @@
 import { EntityUpdate } from '../../../typings';
 
-import { User, UserDraft } from './User.model';
+import { User, UserDraft, UserDocument } from './User.model';
 
-export async function snapshot(user: User): Promise<User> {
-  // @ts-ignore
-  return User.findOne(user)
+export async function snapshot(_id: UserDocument) {
+  const user = await User.findOne({ _id })
     .populate('journeys')
     .exec();
+
+  if (!user) throw new Error(`Can't find user: ${_id}"`);
+
+  return user;
 }
 
-export async function create(draft: UserDraft): Promise<User> {
-  const user = new User(draft);
+export async function snapshotByOauth(oauth: string) {
+  const user = await User.findOne({ oauth })
+    .populate('journeys')
+    .exec();
 
-  await user.save().catch(err => {
+  if (!user) throw new Error(`Can't find user: ${oauth}"`);
+
+  return user;
+}
+
+export async function snapshotByEmail(email: string) {
+  const user = await User.findOne({ email })
+    .populate('journeys')
+    .exec();
+
+  if (!user) throw new Error(`Can't find user: ${email}"`);
+
+  return user;
+}
+
+export async function create(draft: UserDraft): Promise<UserDocument> {
+  return new User(draft).save().catch(err => {
     throw new Error(err);
   });
-
-  if (!user) throw new Error(`Can't create user: ${JSON.stringify(draft)}`);
-
-  return snapshot(user);
 }
 
-export async function update({ entity: user, diff }: EntityUpdate<User, UserDraft>): Promise<User> {
+export async function update({ entity: user, diff }: EntityUpdate<UserDocument, UserDraft>): Promise<UserDocument> {
   const draft = await User.findOne(user);
 
   if (!draft) throw new Error(`Can't find user: ${user.id}"`);
 
   Object.assign(draft, diff);
 
-  await draft.save().catch(err => {
+  return draft.save().catch(err => {
     throw new Error(err);
   });
-
-  return snapshot(draft);
 }
 
-export async function remove(draft: UserDraft) {
-  await User.deleteOne(draft).catch(err => {
+export async function remove(_id: UserDocument) {
+  await User.deleteOne({ _id }).catch(err => {
     throw new Error(err);
   });
 }
 
 export const userPublicApi = {
-  create,
   snapshot,
+  snapshotByOauth,
+  snapshotByEmail,
+  create,
   update,
   remove,
 };

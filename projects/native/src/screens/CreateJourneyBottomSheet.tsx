@@ -19,7 +19,7 @@ export const CreateJourneyBottomSheet: BottomSheetComponent = () => {
   const process = useSelector((state: GlobalState) => state.process[processTypes.createJourneyProcess]);
   const [journeyTitle, setJourneyTitle] = useState('');
 
-  const onSave = () =>
+  const onSave = async () =>
     dispatch(
       databaseCreateJourney({
         createdBy: user.auth!.uid,
@@ -50,7 +50,7 @@ export const CreateJourneyBottomSheet: BottomSheetComponent = () => {
     <BottomSheetCreateScreen title="Journey">
       <Form>
         <FormField label="Title">
-          <Input onChangeText={value => setJourneyTitle(value)} value={journeyTitle} disabled={isSuccess} />
+          <Input onChangeText={value => setJourneyTitle(value)} value={journeyTitle} disabled={inProgress} />
         </FormField>
       </Form>
       <BottomSheetActions>

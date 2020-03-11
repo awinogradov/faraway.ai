@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { googleMaps, googleMapsPhotoUrl } from '../../googleMaps';
-import * as locationKindService from '../LocationType/LocationType.service';
+import * as locationTypeService from '../LocationType/LocationType.service';
+import * as journeyService from '../Journey/Journey.service';
 
 import { Location, LocationDraft, LocationQuery } from './Location.model';
 
@@ -12,20 +13,22 @@ export async function snapshot(location: LocationQuery): Promise<Location> {
     });
 }
 
-export async function create(draft: LocationDraft): Promise<Location> {
-  const location = new Location(draft);
-  const locationKind = await locationKindService.snapshot(location.type);
-
-  await location.save().catch(err => {
-    throw new Error(err);
-  });
-
-  locationKind.locations.push(location);
-  await locationKindService.update({ entity: locationKind, diff: { locations: locationKind.locations } });
+export async function create(draft: LocationDraft) {
+  const locationType = await locationTypeService.snapshot(draft.type);
+  // @ts-ignore
+  const journey = await journeyService.snapshot(draft.journeys[0]);
+  const location = await new Location({
+    ...draft,
+    type: locationType,
+  })
+    .save()
+    .catch(err => {
+      throw new Error(err);
+    });
 
   if (!location) throw new Error(`Can't create location: ${JSON.stringify(draft)}`);
 
-  return snapshot(location);
+  await journeyService.update({ entity: journey, diff: { locations: [...journey.locations, location] } });
 }
 
 export async function findOnGoogleMaps(search: { query: string }) {

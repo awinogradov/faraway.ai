@@ -30,7 +30,7 @@ describe(`database: ${Journey.name}`, () => {
   });
 
   it('create', async () => {
-    const draft = journeyDraftCreator({ createdBy: testUser.oauth });
+    const draft = journeyDraftCreator({ createdBy: testUser._id });
     const journey = await journeyService.create(draft);
 
     expect(journey.id).to.be.not.eq(undefined);
@@ -42,14 +42,14 @@ describe(`database: ${Journey.name}`, () => {
 
   it('update', async () => {
     const updatedTitle = faker.lorem.words(4);
-    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
     const updatedJourney = await journeyService.update({ entity: journey, diff: { title: updatedTitle } });
 
     expect(updatedJourney.title).to.be.eq(updatedTitle);
   });
 
   it('update: disalow update createdBy', async () => {
-    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
 
     await journeyService
       .update({
@@ -63,7 +63,7 @@ describe(`database: ${Journey.name}`, () => {
   });
 
   it('remove', async () => {
-    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+    const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
     expect(journey).to.be.not.eq(null);
 
     await journeyService.remove(journey);
@@ -74,14 +74,14 @@ describe(`database: ${Journey.name}`, () => {
 
   describe('members', () => {
     it('link', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
       const updated = await journeyService.link({ journey, entity: sharedWithUser });
 
       expect(updated.members[0].email).to.be.eq(sharedWithUser.email);
     });
 
     it('uniq', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
 
       await journeyService.link({ journey, entity: sharedWithUser });
       await journeyService.link({ journey, entity: sharedWithUser }).catch((err: Error) => {
@@ -92,7 +92,7 @@ describe(`database: ${Journey.name}`, () => {
     });
 
     it('unlink', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
       const linked = await journeyService.link({ journey, entity: sharedWithUser });
       expect(linked.members.length).to.be.eq(1);
 
@@ -103,14 +103,14 @@ describe(`database: ${Journey.name}`, () => {
 
   describe('notes', () => {
     it('link', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
       const updated = await journeyService.link({ journey, entity: collectedNote });
 
       expect(updated.notes[0].id).to.be.eq(collectedNote.id);
     });
 
     it('uniq', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
 
       await journeyService.link({ journey, entity: collectedNote });
       await journeyService.link({ journey, entity: collectedNote }).catch((err: Error) => {
@@ -121,7 +121,7 @@ describe(`database: ${Journey.name}`, () => {
     });
 
     it('unlink', async () => {
-      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser.oauth }));
+      const journey = await journeyService.create(journeyDraftCreator({ createdBy: testUser._id }));
       const linked = await journeyService.link({ journey, entity: collectedNote });
       expect(linked.notes.length).to.be.eq(1);
 

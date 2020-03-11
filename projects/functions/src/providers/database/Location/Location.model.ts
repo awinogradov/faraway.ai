@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-constructor */
 import mongoose, { Schema, Document } from 'mongoose';
 
-import { JourneyDocument } from '../Journey/Journey.model';
 import { LocationTypeDocument } from '../LocationType/LocationType.model';
 
 export interface LocationDocument extends Document {
-  kind: 'location';
+  _id: LocationDocument;
 
+  kind: 'location';
   /** Google Maps id */
   id: string;
   /** Google Maps location title */
@@ -21,7 +21,6 @@ export interface LocationDocument extends Document {
   created: number;
 
   type: LocationTypeDocument;
-  journeys: JourneyDocument[];
 }
 
 type DraftColumns = 'id' | 'address' | 'lat' | 'lng' | 'title' | 'type';
@@ -38,7 +37,6 @@ const LocationSchema = new Schema<LocationDocument>({
   created: { type: Number, default: Date.now },
 
   type: { type: Schema.Types.ObjectId, required: true, ref: 'LocationType' },
-  journeys: [{ type: Schema.Types.ObjectId, ref: 'Journey' }],
 });
 
 export class Location extends mongoose.model<LocationDocument>('Location', LocationSchema) {

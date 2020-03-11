@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-constructor */
 import mongoose, { Schema, Document } from 'mongoose';
-import { v4 } from 'uuid';
 
 import { JourneyDocument } from '../Journey/Journey.model';
 
 export interface UserDocument extends Document {
+  _id: UserDocument;
   kind: 'user';
-  id: string;
+
   email: string;
   oauth: string;
   created: number;
@@ -18,7 +18,6 @@ export type UserDraft = Pick<UserDocument, DraftColumns>;
 
 const UserSchema = new Schema<UserDocument>({
   kind: { type: String, default: () => 'user' },
-  id: { type: String, default: v4, unique: true },
   email: { type: String, required: true, unique: true },
   oauth: { type: String, required: true, unique: true },
   created: { type: Number, default: Date.now },

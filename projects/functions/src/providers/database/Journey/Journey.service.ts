@@ -3,34 +3,32 @@ import { EntityUpdate } from '../../../typings';
 import { User } from '../User/User.model';
 import { Note } from '../Note/Note.model';
 import { Location } from '../Location/Location.model';
+import * as userService from '../User/User.service';
 
-import { Journey, JourneyDraft } from './Journey.model';
+import { Journey, JourneyDraft, JourneyDocument } from './Journey.model';
 
-export async function snapshot(journey: Journey): Promise<Journey> {
-  // @ts-ignore
-  return Journey.findOne({ id: journey.id })
+export async function snapshot(journey: JourneyDocument): Promise<Journey> {
+  return Journey.findOne({ _id: journey })
     .populate('createdBy')
     .populate('members')
     .populate('notes')
     .populate('locations')
-    .exec()
     .catch(err => {
       throw new Error(err);
     });
 }
 
-export async function create(draft: JourneyDraft): Promise<Journey> {
-  const user = await User.findOne({ oauth: draft.createdBy });
+export async function create(draft: JourneyDraft): Promise<JourneyDocument> {
+  const user = await userService.snapshot(draft.createdBy);
 
   if (!user) throw new Error(`Can't find user: ${draft.createdBy}`);
 
-  const notSaved: JourneyDraft = {
+  const journey = new Journey({
     ...draft,
     createdBy: user,
-  };
-  const journey = new Journey(notSaved);
+  });
 
-  await journey.save().catch(err => {
+  await journey.save().catch((err: string) => {
     throw new Error(err);
   });
 
@@ -39,26 +37,24 @@ export async function create(draft: JourneyDraft): Promise<Journey> {
   await user.journeys.push(journey);
   await user.save();
 
-  return snapshot(journey);
+  return journey;
 }
 
 export async function update({
   entity: journey,
   diff,
-}: EntityUpdate<Journey, Omit<JourneyDraft, 'createdBy'>>): Promise<Journey> {
-  const draft = await Journey.findOne({ id: journey.id });
+}: EntityUpdate<JourneyDocument, Omit<JourneyDraft, 'createdBy'>>): Promise<JourneyDocument> {
+  const draft = await Journey.findOne({ _id: journey });
 
-  if (!draft) throw new Error(`Can't find journey: ${journey.id}"`);
+  if (!draft) throw new Error(`Can't find journey: ${journey}"`);
   // @ts-ignore check for non TS usage
   if (diff.createdBy) throw new Error(`Can't update createdBy field`);
 
   Object.assign(draft, diff);
 
-  await draft.save().catch(err => {
+  return draft.save().catch(err => {
     throw new Error(err);
   });
-
-  return snapshot(draft);
 }
 
 export type JourneyChildren = User | Note | Location;

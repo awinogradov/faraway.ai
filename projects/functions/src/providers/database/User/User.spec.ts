@@ -38,6 +38,7 @@ describe(`database: ${User.name}`, () => {
 
     const user = await userService.create(testUser);
     const updatedUser = await userService.update({ entity: user, diff: { email: updatedEmail } });
+
     expect(updatedUser.email).to.be.eq(updatedEmail);
   });
 
@@ -56,7 +57,7 @@ describe(`database: ${User.name}`, () => {
     expect(user).to.be.not.eq(null);
 
     await userService.remove(user);
-    const found = await userService.snapshot(user);
+    const found = await userService.snapshot(user._id);
 
     expect(found).to.be.eq(null);
   });

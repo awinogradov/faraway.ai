@@ -1,20 +1,45 @@
-import { firebase } from '@react-native-firebase/functions';
-import { InstagramProps, InstagramScrapedPost } from 'faraway.ai-functions';
+export enum remote {
+  dbUserCreate = 'db-user-create',
+  dbUserSnapshot = 'db-user-snapshot',
+  dbUserSnapshotByOauth = 'db-user-snapshotByOauth',
+  dbUserSnapshotByEmail = 'db-user-snapshotByEmail',
 
-type FunctionCall<P, R = void> = (props: P) => Promise<{ data: R }>;
+  dbJourneyCreate = 'db-journey-create',
 
-function provideFunction<P, R>(name: string): FunctionCall<P, R> {
-  return async (props: P) => {
-    let res;
-    try {
-      res = await firebase.functions().httpsCallable(name)(props);
-    } catch (err) {
-      console.error(err);
-    }
+  dbLocationFindOnGoogleMaps = 'db-location-findOnGoogleMaps',
+  dbLocationCreate = 'db-location-create',
 
-    return res && res.data ? res.data : null;
-  };
+  dbLocationTypeAll = 'db-locationType-all',
 }
 
-export const scrapInstagram = provideFunction<InstagramProps, InstagramScrapedPost>('scrapInstagram');
-export const googleMapsSearch = provideFunction<InstagramProps, InstagramScrapedPost>('googleMapsSearch');
+export interface AskProps<P> {
+  function: remote;
+  method?: 'GET' | 'POST';
+  payload?: P;
+}
+
+export const ask = <P>(props: AskProps<P>) =>
+  fetch(`http://localhost:5000/faraway-ai/us-central1/${props.function}`, {
+    method: props.method || 'POST',
+    body: JSON.stringify(props.payload),
+  })
+    .then(res => {
+      if (!res.ok) return { error: res.statusText || 'Smth went wrong...' };
+
+      return res.json();
+    })
+    .catch((error: Error) => ({ error }));
+
+export interface CreateJourney {
+  title: string;
+  createdBy: string;
+  startsAt?: number;
+  endsAt?: number;
+  members?: string[];
+}
+
+export interface CreatePoint {
+  id: string;
+  type: string;
+  journeys: string[];
+}

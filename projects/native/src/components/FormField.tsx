@@ -29,12 +29,12 @@ const StyledControl = styled(View)`
 `;
 
 export interface FormFieldProps {
-  label: string;
+  label?: string;
 }
 
 export const FormField: React.FC<FormFieldProps> = ({ label, children }) => (
   <StyledFormField>
-    <StyledLabel>{label}</StyledLabel>
+    {label ? <StyledLabel>{label}</StyledLabel> : null}
     <StyledControl>{children}</StyledControl>
   </StyledFormField>
 );

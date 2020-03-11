@@ -3,4 +3,5 @@ export enum databaseActionTypes {
   DONE_JOURNEY = 'database/DONE_JOURNEY',
 
   CREATE_POINT = 'database/CREATE_POINT',
+  DONE_POINT = 'database/DONE_POINT',
 }

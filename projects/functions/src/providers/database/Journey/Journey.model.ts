@@ -1,13 +1,12 @@
 /* eslint-disable no-useless-constructor */
 import mongoose, { Schema, Document } from 'mongoose';
-import { v4 } from 'uuid';
 
 import { UserDocument } from '../User/User.model';
 import { NoteDocument } from '../Note/Note.model';
 import { LocationDocument } from '../Location/Location.model';
 
 export interface JourneyDocument extends Document {
-  id: string;
+  _id: JourneyDocument;
   title: string;
   description: string;
   created: number;
@@ -19,11 +18,10 @@ export interface JourneyDocument extends Document {
   locations: LocationDocument[];
 }
 
-type DraftColumns = 'title' | 'description' | 'startsAt' | 'endsAt' | 'members';
-export type JourneyDraft = Pick<JourneyDocument, DraftColumns> & { createdBy: UserDocument };
+type DraftColumns = 'title' | 'description' | 'startsAt' | 'endsAt' | 'members' | 'locations' | 'createdBy';
+export type JourneyDraft = Pick<JourneyDocument, DraftColumns>;
 
 const JourneySchema = new Schema<JourneyDocument>({
-  id: { type: String, default: v4, unique: true },
   title: { type: String, required: true },
   description: { type: String },
   created: { type: Number, default: Date.now },

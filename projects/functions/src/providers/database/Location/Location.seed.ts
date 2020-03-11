@@ -14,6 +14,7 @@ export const locationDraftCreator = ({ type }: NonGeneratedColumns): Readonly<Lo
     lat: Number(faker.address.latitude()),
     lng: Number(faker.address.longitude()),
     type,
+    journeys: [],
   });
 
 export function dangerouslyDropAllRecords() {
