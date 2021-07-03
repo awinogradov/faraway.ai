@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
-import auth from '@react-native-firebase/auth';
+// import auth from '@react-native-firebase/auth';
 import { produce } from 'immer';
 
 import { ActionTypes } from '../../../utils/actionTypes';
-import { GlobalState } from '../store/types';
+import { GlobalState } from '../../../typings/state';
 import { userActionTypes } from '../constants/user';
 import * as userActions from '../actions/user';
 
 const initialState = {
-  auth: auth().currentUser || undefined,
+  id: undefined,
 };
 
 export default function userReducer(
@@ -17,8 +17,8 @@ export default function userReducer(
 ) {
   return produce(state, draft => {
     switch (action.type) {
-      case userActionTypes.AUTH_CHANGE_SUCCESS:
-        draft.auth = action.payload;
+      case userActionTypes.SET_ID:
+        draft.id = action.payload;
         break;
       case userActionTypes.AUTH_CHANGE_ERROR:
         draft.error = action.payload;

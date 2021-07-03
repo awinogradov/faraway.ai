@@ -4,3 +4,8 @@ export enum processActionTypes {
   PROCESS_SUCCESS = 'process/PROCESS_SUCCESS',
   PROCESS_ERROR = 'process/PROCESS_ERROR',
 }
+
+export enum processTypes {
+  createJourneyProcess = 'createJourney',
+  createPointProcess = 'createPoint',
+}

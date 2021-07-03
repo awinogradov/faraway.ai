@@ -2,7 +2,7 @@
 import { produce } from 'immer';
 
 import { ActionTypes } from '../../../utils/actionTypes';
-import { GlobalState } from '../store/types';
+import { GlobalState } from '../../../typings/state';
 import { processActionTypes } from '../constants/process';
 import * as processActions from '../actions/process';
 

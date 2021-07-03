@@ -1,7 +1,6 @@
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AppStateStatus } from 'react-native';
 
-import { allowedScreens, allowedBottomSheetScreens } from '../../navigation';
+import { allowedScreens, bottomSheetComponents } from '../providers/navigation';
 
 export interface GlobalState {
   process: Record<
@@ -16,7 +15,7 @@ export interface GlobalState {
     | undefined
   >;
   user: {
-    auth?: FirebaseAuthTypes.User;
+    id?: string;
     error?: Error;
   };
   add: {
@@ -31,7 +30,7 @@ export interface GlobalState {
     clipboard?: string;
     bottomSheet: {
       visible: boolean;
-      component: allowedBottomSheetScreens | null;
+      component: bottomSheetComponents | null;
     };
     tabs: {
       visible: boolean;

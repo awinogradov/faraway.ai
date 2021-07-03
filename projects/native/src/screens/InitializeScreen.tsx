@@ -11,7 +11,7 @@ export const InitializeScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(navigate(user.auth ? allowedScreens.App : allowedScreens.Auth));
+    dispatch(navigate(user.id ? allowedScreens.App : allowedScreens.Auth));
   });
 
   return <Text>Initializing...</Text>;

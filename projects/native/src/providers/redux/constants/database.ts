@@ -1,3 +1,7 @@
 export enum databaseActionTypes {
-  CREATE_COLLECTION = 'database/CREATE_COLLECTION',
+  CREATE_JOURNEY = 'database/CREATE_JOURNEY',
+  DONE_JOURNEY = 'database/DONE_JOURNEY',
+
+  CREATE_POINT = 'database/CREATE_POINT',
+  DONE_POINT = 'database/DONE_POINT',
 }

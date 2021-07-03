@@ -5,8 +5,9 @@ import auth from '@react-native-firebase/auth';
 import { put, takeEvery, call } from 'redux-saga/effects';
 
 import { allowedScreens } from '../../navigation';
+import { ask, remote } from '../../functions';
 import { userActionTypes } from '../constants/user';
-import { userAuthError, userAuthChangeInProgress, userAuthChangeSuccess } from '../actions/user';
+import { userAuthError, userAuthChangeInProgress, userAuthChangeSuccess, userSetId } from '../actions/user';
 import { navigate } from '../actions/app';
 
 const carriedAuth = auth();
@@ -69,21 +70,13 @@ function* success(action: ReturnType<typeof userAuthChangeSuccess>) {
       oauth: action.payload.uid,
     };
 
-    let userAlreadyExists = yield call(() =>
-      fetch('http://localhost:5000/faraway-ai/us-central1/db-user-snapshot', {
-        method: 'POST',
-        body: JSON.stringify(userProps),
-      }).then(res => res.json()),
-    );
+    let userAlreadyExists = yield call(() => ask({ function: remote.dbUserSnapshotByEmail, payload: userProps.email }));
 
     if (!userAlreadyExists) {
-      userAlreadyExists = yield call(() =>
-        fetch('http://localhost:5000/faraway-ai/us-central1/db-user-create', {
-          method: 'POST',
-          body: JSON.stringify(userProps),
-        }).then(res => res.json()),
-      );
+      userAlreadyExists = yield call(() => ask({ function: remote.dbUserCreate, payload: userProps }));
     }
+
+    yield put(userSetId(userAlreadyExists._id));
   }
   yield put(navigate(action.payload ? allowedScreens.App : allowedScreens.Auth));
 }

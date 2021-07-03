@@ -10,7 +10,7 @@ import IconNotifications from '../components/Icon/_view/Icon_view_notifications.
 import IconAdd from '../components/Icon/_view/Icon_view_add.svg';
 import { GlobalState } from '../providers/redux/store';
 import { navigate, showBottomSheet } from '../providers/redux/actions/app';
-import { allowedScreens, allowedBottomSheetScreens, allowedBottomSheetSnaps } from '../providers/navigation';
+import { allowedScreens, bottomSheetComponents } from '../providers/navigation';
 
 interface StyledConteinterProps {
   visible: boolean;
@@ -151,8 +151,7 @@ export const Bar: React.FC = () => {
             onPress={() =>
               dispatch(
                 showBottomSheet({
-                  snapTo: allowedBottomSheetSnaps.addMenu,
-                  component: allowedBottomSheetScreens.AddMenu,
+                  component: bottomSheetComponents.AddMenuBottomSheet,
                 }),
               )
             }

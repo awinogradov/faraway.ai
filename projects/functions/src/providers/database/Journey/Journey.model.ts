@@ -1,13 +1,12 @@
 /* eslint-disable no-useless-constructor */
 import mongoose, { Schema, Document } from 'mongoose';
-import { v4 } from 'uuid';
 
 import { UserDocument } from '../User/User.model';
 import { NoteDocument } from '../Note/Note.model';
-import { AttractionDocument } from '../Attraction/Attraction.model';
+import { LocationDocument } from '../Location/Location.model';
 
 export interface JourneyDocument extends Document {
-  id: string;
+  _id: JourneyDocument;
   title: string;
   description: string;
   created: number;
@@ -16,14 +15,13 @@ export interface JourneyDocument extends Document {
   createdBy: UserDocument;
   members: UserDocument[];
   notes: NoteDocument[];
-  attractions: AttractionDocument[];
+  locations: LocationDocument[];
 }
 
-type DraftColumns = 'title' | 'description' | 'startsAt' | 'endsAt' | 'members';
-export type JourneyDraft = Pick<JourneyDocument, DraftColumns> & { createdBy: string };
+type DraftColumns = 'title' | 'description' | 'startsAt' | 'endsAt' | 'members' | 'locations' | 'createdBy';
+export type JourneyDraft = Pick<JourneyDocument, DraftColumns>;
 
 const JourneySchema = new Schema<JourneyDocument>({
-  id: { type: String, default: v4, unique: true },
   title: { type: String, required: true },
   description: { type: String },
   created: { type: Number, default: Date.now },
@@ -32,7 +30,7 @@ const JourneySchema = new Schema<JourneyDocument>({
   createdBy: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
-  attractions: [{ type: Schema.Types.ObjectId, ref: 'Attraction' }],
+  locations: [{ type: Schema.Types.ObjectId, ref: 'Location' }],
 });
 
 export class Journey extends mongoose.model<JourneyDocument>('Journey', JourneySchema) {

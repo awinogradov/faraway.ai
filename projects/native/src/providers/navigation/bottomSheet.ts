@@ -1,51 +1,39 @@
-import React from 'react';
-
 import { AddMenuBottomSheet } from '../../screens/AddMenuBottomSheet';
-import { CreateCollectionBottomSheet } from '../../screens/CreateCollectionBottomSheet';
+import { CreateJourneyBottomSheet } from '../../screens/CreateJourneyBottomSheet';
+import { CreatePointBottomSheet } from '../../screens/CreatePointBottomSheet';
+import { BottomSheetComponent, BottomSheetNavigator } from '../../typings/bottomSheet';
 
-const bottomSheetPositions = {
-  closed: 0,
-  addMenu: 270,
-  createCollection: 320,
-};
-
-export const bottomSheetSnapPoints = Object.values(bottomSheetPositions);
-
-export const allowedBottomSheetSnaps = {
-  closed: 0,
-  addMenu: 1,
-  createCollection: 2,
-};
-
-export enum allowedBottomSheetScreens {
-  AddMenu = 'AddMenuBottomSheet',
-  CreateCollection = 'CreateCollectionBottomSheet',
+export enum bottomSheetComponents {
+  'AddMenuBottomSheet' = 'AddMenuBottomSheet',
+  'CreateJourneyBottomSheet' = 'CreateJourneyBottomSheet',
+  'CreatePointBottomSheet' = 'CreatePointBottomSheet',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const bottomSheetComponentsRegistry: Record<allowedBottomSheetScreens, React.ComponentType<any>> = {
+export const bottomSheetComponentsRegistry: Record<bottomSheetComponents, BottomSheetComponent> = {
   AddMenuBottomSheet,
-  CreateCollectionBottomSheet,
+  CreateJourneyBottomSheet,
+  CreatePointBottomSheet,
 };
 
-interface BottomSheetNavigator {
-  snapTo: (position: number) => void;
-}
+export const allowedSnaps = [
+  0,
+  AddMenuBottomSheet.position,
+  CreateJourneyBottomSheet.position,
+  CreatePointBottomSheet.position,
+];
+export const calcSnapForComponent = (component: bottomSheetComponents) =>
+  allowedSnaps.indexOf(bottomSheetComponentsRegistry[component].position);
 
 let bottomSheetNavigator: BottomSheetNavigator;
 
-export function setBottomSheetNavigator(navigatorRef: typeof bottomSheetNavigator) {
+export function setBottomSheetNavigator(navigatorRef: BottomSheetNavigator) {
   bottomSheetNavigator = navigatorRef;
 }
 
-export function showNativeBottomSheet(snapTo: number) {
-  setTimeout(() => {
-    bottomSheetNavigator.snapTo(snapTo);
-  }, 0);
+export function showNativeBottomSheet(snapTo = 1) {
+  setTimeout(() => bottomSheetNavigator.snapTo(snapTo), 0);
 }
 
-export const closeNativeBottomSheet = (timeout: number = 0) => {
-  setTimeout(() => {
-    bottomSheetNavigator.snapTo(bottomSheetPositions.closed);
-  }, timeout);
+export const closeNativeBottomSheet = (timeout = 0) => {
+  setTimeout(() => bottomSheetNavigator.snapTo(0), timeout);
 };

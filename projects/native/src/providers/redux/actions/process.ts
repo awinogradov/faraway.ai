@@ -10,6 +10,5 @@ interface ProcessUpdateProps {
 
 export const emitProcess = (key: ProcessUpdateProps['key']) => createAction(processActionTypes.EMIT_PROCESS, key);
 export const processError = (props: ProcessUpdateProps) => createAction(processActionTypes.PROCESS_ERROR, props);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const processSuccess = (props: ProcessUpdateProps) => createAction(processActionTypes.PROCESS_SUCCESS, props);
 export const deleteProcess = (key: ProcessUpdateProps['key']) => createAction(processActionTypes.DELETE_PROCESS, key);

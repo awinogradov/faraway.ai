@@ -1,10 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import faker from 'faker';
 
+import { UserDocument } from '../User/User.model';
+
 import { JourneyDraft, Journey } from './Journey.model';
 
 interface NonGeneratedColumns {
-  createdBy: string;
+  createdBy: UserDocument;
 }
 
 export const journeyDraftCreator = ({ createdBy }: NonGeneratedColumns): Readonly<JourneyDraft> =>
@@ -15,6 +17,7 @@ export const journeyDraftCreator = ({ createdBy }: NonGeneratedColumns): Readonl
     members: [],
     startsAt: Date.now(),
     endsAt: Date.now(),
+    locations: [],
   });
 
 export function dangerouslyDropAllRecords() {
