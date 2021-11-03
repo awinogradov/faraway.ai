@@ -43,7 +43,7 @@
     "redux-logger": "3.0.6",
     "redux-saga": "1.1.1",
     "styled-components": "4.4.0",
-    "validator": "11.1.0"
+    "validator": "13.7.0"
   },
   "devDependencies": {
     "@babel/core": "7.6.4",
